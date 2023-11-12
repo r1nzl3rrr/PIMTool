@@ -1,21 +1,25 @@
 ﻿using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Repositories;
+using PIMTool.Core.Specifications;
 
 namespace PIMTool.Core.Interfaces.Services
 {
     public interface IProjectService
     {
-        Task<Project> AddProjectAsync(Project project, CancellationToken cancellationToken = default);
-        Task<Project?> GetAsync(int id, CancellationToken cancellationToken = default);
+        Task<IReadOnlyCollection<Project>> GetProjectsAsyncWithSpec(ISpecification<Project> spec, CancellationToken cancellationToken);
 
-        Task SaveProject(Project project, CancellationToken cancellationToken = default);
+        Task<Project?> GetProjectWithSpec(ISpecification<Project> spec, CancellationToken cancellationToken);
 
-        Task DeleteProject(Project[] projects, CancellationToken cancellationToken = default);
+        Task<IReadOnlyCollection<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken);
 
-        Task<List<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken);
+        Task AddRangeProjectAsync(IEnumerable<Project> projects, CancellationToken cancellationToken = default);
 
-        Task<List<Project>> SearchProjects(string projectName, string customerName, string projectStatus, CancellationToken cancellationToken = default);
+        Task AddProjectAsync(Project project, CancellationToken cancellationToken = default);
 
-        Task<List<Project>> SearchProjectsAdvanced(string projectName, string customerName, string projectStatus, string groupLeaderVisa, CancellationToken cancellationToken = default);
+        Task DeleteProjects(Project[] projects, CancellationToken cancellationToken);
+
+        Task UpdateProjectAsync(Project project, CancellationToken cancellationToken = default);
+
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIMTool", "PIMTool\PIMTool.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIMTool.Test", "PIMTool.Test\PIMTool.Test.csproj", "{8AC59389-6433-457D-9834-1602022BE60A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIMTool.Core", "PIMTool.Core\PIMTool.Core.csproj", "{1FC7EBE7-058B-4B79-954D-DED33D64687F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIMTool.Core", "PIMTool.Core\PIMTool.Core.csproj", "{1FC7EBE7-058B-4B79-954D-DED33D64687F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F83552E-4807-4976-B2EB-003E76CBFC82}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

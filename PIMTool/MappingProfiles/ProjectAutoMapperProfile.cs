@@ -8,7 +8,8 @@ namespace PIMTool.MappingProfiles
     {
         public ProjectAutoMapperProfile()
         {
-            CreateMap<Project, ProjectDto>();
+            CreateMap<Project, ProjectDto>()
+                .ForMember(d => d.Group, o => o.MapFrom(s => s.Group.Id));
         }
     }
 }

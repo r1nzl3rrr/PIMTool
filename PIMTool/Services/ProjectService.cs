@@ -1,56 +1,71 @@
-﻿using PIMTool.Core.Domain.Entities;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Repositories;
 using PIMTool.Core.Interfaces.Services;
+using PIMTool.Core.Specifications;
+using PIMTool.Database;
+using PIMTool.Dtos;
+using PIMTool.Repositories;
+using PIMTool.SpecificationEvaluator;
 
 namespace PIMTool.Services
 {
     public class ProjectService : IProjectService
     {
-        private readonly IProjectRepository _projectRepository;
+        private readonly PimContext _pimContext;
+        private readonly IRepository<Project> _projectRepo;
+        private readonly IRepository<ProjectEmployee> _projectEmployeeRepo;
 
-        public ProjectService(IProjectRepository projectRepository)
+        public ProjectService(PimContext pimContext, IRepository<Project> projectRepo, IRepository<ProjectEmployee> projectEmployeeRepo, IMapper mapper)
         {
-            _projectRepository = projectRepository;
+            _pimContext = pimContext;
+            _projectRepo = projectRepo;
+            _projectEmployeeRepo = projectEmployeeRepo;
         }
 
-        public async Task<Project> AddProjectAsync(Project project, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyCollection<Project>> GetProjectsAsyncWithSpec(ISpecification<Project> spec, CancellationToken cancellationToken)
         {
-           await _projectRepository.AddAsync(project, cancellationToken);
-            return project;
+            return await _projectRepo.GetAsyncWithSpec(spec, cancellationToken);
         }
 
-        public async Task DeleteProject(Project[] projects, CancellationToken cancellationToken = default)
+        public async Task<Project?> GetProjectWithSpec(ISpecification<Project> spec, CancellationToken cancellationToken)
         {
-            await _projectRepository.DeleteProject(projects);
-            await _projectRepository.SaveChangesAsync(cancellationToken);
+            return await _projectRepo.GetEntityWithSpec(spec, cancellationToken);
         }
 
-        public async Task<Project?> GetAsync(int id, CancellationToken cancellationToken = default)
+        public async Task AddRangeProjectAsync(IEnumerable<Project> projects, CancellationToken cancellationToken = default)
         {
-            var entity = await _projectRepository.GetAsync(id, cancellationToken);
-            return entity;
+            await _projectRepo.AddRangeAsync(projects, cancellationToken);
+            await SaveChangesAsync();
         }
 
-        public async Task<List<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken)
+        public async Task AddProjectAsync(Project project, CancellationToken cancellationToken = default)
         {
-            return await _projectRepository.GetEmployeesByProjectId(id, cancellationToken);
+            await _projectRepo.AddAsync(project, cancellationToken);
+            await SaveChangesAsync();
         }
 
-        public async Task SaveProject(Project project, CancellationToken cancellationToken = default)
+        public async Task DeleteProjects(Project[] projects, CancellationToken cancellationToken)
         {
-            await _projectRepository.AddAsync(project);
-            await _projectRepository.SaveChangesAsync();
+            await _projectRepo.Delete(projects, cancellationToken);
         }
 
-        public async Task<List<Project>> SearchProjects(string projectName, string customerName, string projectStatus, CancellationToken cancellationToken = default)
+        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return await _projectRepository.SearchProjects(projectName, customerName, projectStatus, cancellationToken); 
-
+            await _projectRepo.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<List<Project>> SearchProjectsAdvanced(string projectName, string customerName, string projectStatus, string groupLeaderVisa, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyCollection<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken)
         {
-            return await _projectRepository.SearchProjectsAdvanced(projectName, customerName, projectStatus, groupLeaderVisa, cancellationToken);
+            var spec = new ProjectEmployeeSpecification(id);
+            var employees = await _projectEmployeeRepo.GetAsyncWithSpec(spec, cancellationToken);
+            return employees.Select(pe => pe.Employee).ToList();
+        }
+
+        public async Task UpdateProjectAsync(Project project, CancellationToken cancellationToken = default)
+        {
+            await _projectRepo.UpdateAsync(project, cancellationToken);
         }
     }
 }

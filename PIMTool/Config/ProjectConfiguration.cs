@@ -17,6 +17,7 @@ namespace PIMTool.Config
             builder.Property(p => p.Status).IsRequired().HasColumnType("char(3)").HasAnnotation("ProjectStatusAttribute", true);
             builder.Property(p => p.Start_Date).IsRequired().HasColumnType("date");
             builder.Property(p => p.End_Date).IsRequired().HasColumnType("date");
+
             builder.HasOne<Group>(p => p.Group)
                     .WithMany(g => g.Projects)
                     .HasForeignKey(p => p.Group_Id);

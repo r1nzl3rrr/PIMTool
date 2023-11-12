@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PIMTool.Core.Domain.Entities 
 {
-    public class Group : IEntity
+    public class Group : BaseEntity
     {
-        public int Id { get; set; }
-
         public int Group_Leader_Id { get; set; }
         public Employee Leader { get; set; }
 

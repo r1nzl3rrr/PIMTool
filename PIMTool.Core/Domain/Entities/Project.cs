@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PIMTool.Core.Domain.Entities
 {
-    public class Project : IEntity
+    public class Project : BaseEntity
     {
-        public int Id { get; set; }
-
         public int Group_Id { get; set; }
         public Group Group { get; set; }
         

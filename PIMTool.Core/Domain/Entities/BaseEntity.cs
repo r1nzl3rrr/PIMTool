@@ -1,6 +1,6 @@
 ﻿namespace PIMTool.Core.Domain.Entities;
 
-public interface IEntity
+public class BaseEntity
 {
     public int Id { get; set; }
 }
