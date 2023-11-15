@@ -15,13 +15,11 @@ namespace PIMTool.Services
     {
         private readonly PimContext _pimContext;
         private readonly IRepository<Project> _projectRepo;
-        private readonly IRepository<ProjectEmployee> _projectEmployeeRepo;
 
-        public ProjectService(PimContext pimContext, IRepository<Project> projectRepo, IRepository<ProjectEmployee> projectEmployeeRepo, IMapper mapper)
+        public ProjectService(PimContext pimContext, IRepository<Project> projectRepo)
         {
             _pimContext = pimContext;
             _projectRepo = projectRepo;
-            _projectEmployeeRepo = projectEmployeeRepo;
         }
 
         public async Task<IReadOnlyCollection<Project>> GetProjectsAsyncWithSpec(ISpecification<Project> spec, CancellationToken cancellationToken)
@@ -37,18 +35,22 @@ namespace PIMTool.Services
         public async Task AddRangeProjectAsync(IEnumerable<Project> projects, CancellationToken cancellationToken = default)
         {
             await _projectRepo.AddRangeAsync(projects, cancellationToken);
-            await SaveChangesAsync();
         }
 
         public async Task AddProjectAsync(Project project, CancellationToken cancellationToken = default)
         {
             await _projectRepo.AddAsync(project, cancellationToken);
-            await SaveChangesAsync();
         }
 
-        public async Task DeleteProjects(Project[] projects, CancellationToken cancellationToken)
+        public async Task DeleteProjects(int id, CancellationToken cancellationToken)
         {
-            await _projectRepo.Delete(projects, cancellationToken);
+            var project = _projectRepo.GetIdAsync(id, cancellationToken);
+            if (project != null)
+            {
+                var employeeNumbers = _pimContext.ProjectEmployees.Where(pe => pe.Project_Id== id);
+                _pimContext.ProjectEmployees.RemoveRange(employeeNumbers);
+                await _projectRepo.Delete(await project, cancellationToken);
+            }
         }
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -58,9 +60,12 @@ namespace PIMTool.Services
 
         public async Task<IReadOnlyCollection<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken)
         {
-            var spec = new ProjectEmployeeSpecification(id);
-            var employees = await _projectEmployeeRepo.GetAsyncWithSpec(spec, cancellationToken);
-            return employees.Select(pe => pe.Employee).ToList();
+            var employees = await _pimContext.ProjectEmployees
+                                    .Include(pe => pe.Employee)
+                                    .Where(pe => pe.Project_Id == id)
+                                    .Select(pe => pe.Employee)
+                                    .ToListAsync(cancellationToken);
+            return employees;
         }
 
         public async Task UpdateProjectAsync(Project project, CancellationToken cancellationToken = default)

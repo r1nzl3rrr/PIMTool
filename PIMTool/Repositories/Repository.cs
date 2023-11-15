@@ -31,18 +31,18 @@ namespace PIMTool.Repositories
         public async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
             await _set.AddRangeAsync(entities, cancellationToken);
-            await SaveChangesAsync();
+            await SaveChangesAsync(cancellationToken);
         }
 
         public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
         {
             await _set.AddAsync(entity, cancellationToken);
-            await SaveChangesAsync();
+            await SaveChangesAsync(cancellationToken);
         }
 
-        public async Task Delete(T[] entities, CancellationToken cancellationToken)
+        public async Task Delete(T entity, CancellationToken cancellationToken)
         {
-            _set.RemoveRange(entities);
+            _set.Remove(entity);
             await SaveChangesAsync(cancellationToken);
         }
 

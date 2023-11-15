@@ -13,7 +13,7 @@ namespace PIMTool.Core.Interfaces.Services
 
         Task AddEmployeeAsync(Employee employee, CancellationToken cancellationToken = default);
 
-        Task DeleteEmployees(Employee[] employees, CancellationToken cancellationToken);
+        Task DeleteEmployees(int id, CancellationToken cancellationToken);
         Task UpdateEmployeeAsync(Employee employee, CancellationToken cancellationToken);
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }

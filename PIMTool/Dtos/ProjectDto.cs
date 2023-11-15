@@ -20,7 +20,4 @@ public class ProjectDto
     public string Status { get; set; } = null!;
     public DateTime Start_Date { get; set; }
     public DateTime End_Date { get; set; }
-
-    [Timestamp]
-    public byte[] Version { get; set; }
 }

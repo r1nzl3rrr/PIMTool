@@ -10,9 +10,7 @@ using PIMTool.Services;
 
 namespace PIMTool.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProjectController : ControllerBase
+    public class ProjectController : BaseApiController
     {
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
@@ -69,13 +67,14 @@ namespace PIMTool.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteProjects(Project[] projects, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteProjects(int id, CancellationToken cancellationToken)
         {
-            if (projects == null)
+            var project = GetProjectIdAsync(id, cancellationToken);
+            if (project == null)
             {
                 return NotFound();
             }
-            await _projectService.DeleteProjects(projects, cancellationToken);
+            await _projectService.DeleteProjects(id, cancellationToken);
             return Ok();
         }
 
@@ -100,7 +99,5 @@ namespace PIMTool.Controllers
             var projects = await _projectService.GetProjectsAsyncWithSpec(spec, cancellationToken);
             return _mapper.Map<IReadOnlyCollection<Project>, IReadOnlyCollection<ProjectDto>>(projects);
         }
-
-
     }
 }

@@ -11,7 +11,6 @@ namespace PIMTool.Core.Specifications
         public GroupSpecification(int id) : base(g => g.Id == id)
         {
             AddInclude(g => g.Leader);
-            AddInclude(g => g.Projects);
         }
     }
 }

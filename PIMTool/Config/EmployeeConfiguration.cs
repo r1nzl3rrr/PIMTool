@@ -14,6 +14,7 @@ namespace PIMTool.Config
             builder.Property(e => e.First_Name).IsRequired().HasColumnType("varchar(50)");
             builder.Property(e => e.Last_Name).IsRequired().HasColumnType("varchar(50)");
             builder.Property(e => e.Birth_Date).IsRequired().HasColumnType("date");
+
             builder.HasOne<Group>(e => e.Group)
                    .WithOne(g => g.Leader)
                    .HasForeignKey<Group>(g => g.Group_Leader_Id);

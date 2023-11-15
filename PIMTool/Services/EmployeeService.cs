@@ -1,17 +1,21 @@
+using Microsoft.EntityFrameworkCore;
 using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Repositories;
 using PIMTool.Core.Interfaces.Services;
 using PIMTool.Core.Specifications;
+using PIMTool.Database;
 
 namespace PIMTool.Services
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly IRepository<Employee> _employeeRepo;
+        private readonly PimContext _pimContext;
 
-        public EmployeeService(IRepository<Employee> employeeRepo)
+        public EmployeeService(IRepository<Employee> employeeRepo, PimContext pimContext)
         {
             _employeeRepo = employeeRepo;
+            _pimContext = pimContext;
         }
 
         public async Task AddEmployeeAsync(Employee employee, CancellationToken cancellationToken = default)
@@ -24,9 +28,15 @@ namespace PIMTool.Services
             await _employeeRepo.AddRangeAsync(employees, cancellationToken);
         }
 
-        public async Task DeleteEmployees(Employee[] employees, CancellationToken cancellationToken)
+        public async Task DeleteEmployees(int id, CancellationToken cancellationToken)
         {
-            await _employeeRepo.Delete(employees, cancellationToken);
+            var employee = GetEmployeeIdAsync(id, cancellationToken);
+            if(employee != null)
+            {
+                var projectNumbers = _pimContext.ProjectEmployees.Where(pe => pe.Employee_Id == id);
+                _pimContext.ProjectEmployees.RemoveRange(projectNumbers);
+                await _employeeRepo.Delete(await employee, cancellationToken);
+            }
         }
 
         public async Task<Employee?> GetEmployeeIdAsync(int id, CancellationToken cancellationToken = default)

@@ -1,14 +1,20 @@
-﻿namespace PIMTool.Middlewares
+﻿using PIMTool.Errors;
+using System.Net;
+using System.Text.Json;
+
+namespace PIMTool.Middlewares
 {
     public class GlobalExceptionMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<GlobalExceptionMiddleware> _logger;
+        private readonly IHostEnvironment _env;
 
-        public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
+        public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger, IHostEnvironment env)
         {
             _next = next;
             _logger = logger;
+            _env = env;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -19,15 +25,17 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unexpected exception");
+                _logger.LogError(ex, ex.Message);
                 context.Response.ContentType = "application/json";
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                await context.Response.WriteAsync(new
-                {
-                    Code = 500,
-                    Message = ex.Message
-                }.ToString() ?? string.Empty);
+                var response = _env.IsDevelopment()
+                    ? new ApiException((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString())
+                    : new ApiException((int)HttpStatusCode.InternalServerError);
+
+                var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                var json = JsonSerializer.Serialize(response, options);
+                await context.Response.WriteAsync(json);
             }
         }
     }

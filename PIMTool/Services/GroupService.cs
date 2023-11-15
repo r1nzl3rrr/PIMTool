@@ -17,13 +17,11 @@ namespace PIMTool.Services
         public async Task AddGroupAsync(Group group, CancellationToken cancellationToken = default)
         {
             await _groupRepo.AddAsync(group, cancellationToken);
-            await SaveChangesAsync();
         }
 
         public async Task AddRangeGroupAsync(IEnumerable<Group> groups, CancellationToken cancellationToken = default)
         {
-            await _groupRepo.AddRangeAsync(groups, cancellationToken);
-            await SaveChangesAsync();
+            await _groupRepo.AddRangeAsync(groups, cancellationToken);          
         }
 
         public async Task<IReadOnlyCollection<Group>> GetGroupsAsyncWithSpec(ISpecification<Group> spec, CancellationToken cancellationToken)

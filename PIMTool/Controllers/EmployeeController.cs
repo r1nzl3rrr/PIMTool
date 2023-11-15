@@ -1,31 +1,34 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Services;
+using PIMTool.Dtos;
 
 namespace PIMTool.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : BaseApiController
     {
         private readonly IEmployeeService _employeeService;
-        public EmployeeController(IEmployeeService employeeService)
+        private readonly IMapper _mapper;
+
+        public EmployeeController(IEmployeeService employeeService, IMapper mapper)
         {
             _employeeService = employeeService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyCollection<Employee>>> GetEmployeesAsync(CancellationToken cancellationToken)
+        public async Task<ActionResult<IReadOnlyCollection<EmployeeDto>>> GetEmployeesAsync(CancellationToken cancellationToken)
         {
             var employees = await _employeeService.GetEmployeesAsync(cancellationToken);
-            return Ok(employees);
+            return Ok(_mapper.Map<IReadOnlyCollection<Employee>, IReadOnlyCollection<EmployeeDto>>(employees));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployeeById(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<EmployeeDto>> GetEmployeeById(int id, CancellationToken cancellationToken)
         {
             var employee = await _employeeService.GetEmployeeIdAsync(id, cancellationToken);
-            return employee;
+            return _mapper.Map<Employee, EmployeeDto>(employee);
         }
 
         [HttpPost]
@@ -57,13 +60,14 @@ namespace PIMTool.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteEmployees(Employee[] employees, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteEmployees(int id, CancellationToken cancellationToken)
         {
-            if(employees == null)
+            var employee = _employeeService.GetEmployeeIdAsync(id, cancellationToken);
+            if(employee == null)
             {
                 return NotFound();
             }
-            await _employeeService.DeleteEmployees(employees, cancellationToken);
+            await _employeeService.DeleteEmployees(id, cancellationToken);
             return Ok();
         }
 

@@ -13,7 +13,7 @@ namespace PIMTool.Core.Interfaces.Services
 
         Task AddGroupAsync(Group group, CancellationToken cancellationToken = default);
 
-        Task UpdateGroupAsync(Group group, CancellationToken cancellationToken = default)
+        Task UpdateGroupAsync(Group group, CancellationToken cancellationToken = default);
 
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
 

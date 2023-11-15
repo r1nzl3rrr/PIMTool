@@ -19,7 +19,7 @@ namespace PIMTool.Config
             builder.Property(p => p.End_Date).IsRequired().HasColumnType("date");
 
             builder.HasOne<Group>(p => p.Group)
-                    .WithMany(g => g.Projects)
+                    .WithMany(g => g.Projects)   
                     .HasForeignKey(p => p.Group_Id);
         }
     }

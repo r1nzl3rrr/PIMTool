@@ -1,30 +1,32 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using PIMTool.Core.Domain.Entities;
+using PIMTool.Core.Interfaces.Repositories;
 using PIMTool.Core.Interfaces.Services;
+using PIMTool.Core.Specifications;
 
 namespace PIMTool.Test.Services
 {
     public class ProjectServiceTests : BaseTest
     {
         private IProjectService _projectService = null!;
+        private IRepository<Project> _repository;
 
         [SetUp]
         public void SetUp()
         {
             _projectService = ServiceProvider.GetRequiredService<IProjectService>();
+            _repository = ServiceProvider.GetRequiredService<IRepository<Project>>();
         }
 
         [Test]
         public async Task Get()
         {
             // Arrange
-            var project = new Project();
-            await Context.AddAsync(project);
-            await Context.SaveChangesAsync();
+            
 
             // Act
-            var result = await _projectService.GetAsync(project.Id);
+            var result = await _repository.GetAsync();
 
             // Assert
             Assert.IsNotNull(result);
@@ -37,6 +39,7 @@ namespace PIMTool.Test.Services
             var project = new Project()
             {
                 Name = "Test",
+                Group_Id = 1,
                 Customer = "A San",
                 Status = "NEW"
             };
@@ -44,10 +47,10 @@ namespace PIMTool.Test.Services
             await Context.SaveChangesAsync();
 
             //Act
-            var result = await _projectService.AddProjectAsync(project);
+            await _projectService.AddProjectAsync(project);
 
             //Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(project);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PIMTool.Core.Specifications;
+using System.Reflection.Metadata;
 
 namespace PIMTool.Core.Interfaces.Repositories
 {
@@ -16,7 +17,7 @@ namespace PIMTool.Core.Interfaces.Repositories
 
         Task AddAsync(T entity, CancellationToken cancellationToken = default);
 
-        Task Delete(T[] entities, CancellationToken cancellationToken);
+        Task Delete(T entity, CancellationToken cancellationToken);
         Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }

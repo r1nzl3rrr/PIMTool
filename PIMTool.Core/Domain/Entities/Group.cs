@@ -12,6 +12,5 @@ namespace PIMTool.Core.Domain.Entities
         public byte[] Version { get; set; }
 
         public IList<Project> Projects { get; set; }
-
     }
 }

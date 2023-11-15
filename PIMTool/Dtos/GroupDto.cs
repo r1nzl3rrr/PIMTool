@@ -9,10 +9,6 @@ namespace PIMTool.Dtos
 
         public int Group_Leader_Id { get; set; }
         public string Leader { get; set; }
-
-        [Timestamp]
-        public byte[] Version { get; set; }
-
-        public IList<Project> Projects { get; set; }
+        public IList<int> Projects { get; set; }
     }
 }
