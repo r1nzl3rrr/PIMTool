@@ -11,6 +11,7 @@ namespace PIMTool.Core.Interfaces.Services
         Task<Project?> GetProjectWithSpec(ISpecification<Project> spec, CancellationToken cancellationToken);
 
         Task<IReadOnlyCollection<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken);
+        Task<int> CountProjectsAsync(ISpecification<Project> spec, CancellationToken cancellationToken = default);
 
         Task AddRangeProjectAsync(IEnumerable<Project> projects, CancellationToken cancellationToken = default);
 

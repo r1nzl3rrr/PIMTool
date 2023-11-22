@@ -68,6 +68,11 @@ namespace PIMTool.Repositories
             await SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<int> CountAsync(ISpecification<T> spec, CancellationToken cancellationToken = default)
+        {
+            return await ApplySpecification(spec).CountAsync();
+        }
+
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_set.AsQueryable(), spec);

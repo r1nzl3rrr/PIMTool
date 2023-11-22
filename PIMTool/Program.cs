@@ -29,7 +29,7 @@ EnsureMigrate(app);
 
 // Configure the HTTP request pipeline.
 
-app.UseMiddleware<GlobalExceptionMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 

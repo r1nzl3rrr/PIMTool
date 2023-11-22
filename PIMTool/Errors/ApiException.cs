@@ -1,4 +1,5 @@
-﻿namespace PIMTool.Errors
+﻿
+namespace PIMTool.Errors
 {
     public class ApiException : ApiResponse
     {

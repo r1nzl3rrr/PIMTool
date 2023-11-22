@@ -37,9 +37,16 @@ namespace PIMTool.Services
         {
             await _groupRepo.UpdateAsync(group, cancellationToken);
         }
+
+        public async Task<int> CountGroupsAsync(ISpecification<Group> spec, CancellationToken cancellationToken = default)
+        {
+            return await _groupRepo.CountAsync(spec, cancellationToken);
+        }
+
         public Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return _groupRepo.SaveChangesAsync(cancellationToken);
         }
+        
     }
 }

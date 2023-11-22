@@ -68,9 +68,16 @@ namespace PIMTool.Services
             return employees;
         }
 
+        public async Task<int> CountProjectsAsync(ISpecification<Project> spec, CancellationToken cancellationToken = default)
+        {
+            return await _projectRepo.CountAsync(spec, cancellationToken);
+        }
+
         public async Task UpdateProjectAsync(Project project, CancellationToken cancellationToken = default)
         {
             await _projectRepo.UpdateAsync(project, cancellationToken);
         }
+
+        
     }
 }

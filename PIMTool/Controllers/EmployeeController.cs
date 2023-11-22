@@ -2,7 +2,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Services;
+using PIMTool.Core.Specifications;
 using PIMTool.Dtos;
+using PIMTool.Errors;
+using PIMTool.Helpers;
 
 namespace PIMTool.Controllers
 {
@@ -18,16 +21,32 @@ namespace PIMTool.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyCollection<EmployeeDto>>> GetEmployeesAsync(CancellationToken cancellationToken)
+        public async Task<ActionResult<Pagination<EmployeeDto>>> GetEmployeesAsync([FromQuery]EmployeeSpecParams employeeParams, 
+            CancellationToken cancellationToken)
         {
-            var employees = await _employeeService.GetEmployeesAsync(cancellationToken);
-            return Ok(_mapper.Map<IReadOnlyCollection<Employee>, IReadOnlyCollection<EmployeeDto>>(employees));
+            var spec = new EmployeeSpecification(employeeParams);
+
+            var countSpec = new EmployeeWithFilterForCountSpecification(employeeParams);
+
+            var totalItems = await _employeeService.CountEmployeesAsync(countSpec);
+
+            var employees = await _employeeService.GetEmployeesAsyncWithSpec(spec, cancellationToken);
+
+            var data = _mapper.Map<IReadOnlyCollection<Employee>, IReadOnlyCollection<EmployeeDto>>(employees);
+
+            return Ok(new Pagination<EmployeeDto>(employeeParams.PageIndex, employeeParams.PageSize, totalItems, data));
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<EmployeeDto>> GetEmployeeById(int id, CancellationToken cancellationToken)
         {
             var employee = await _employeeService.GetEmployeeIdAsync(id, cancellationToken);
+            if(employee == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
             return _mapper.Map<Employee, EmployeeDto>(employee);
         }
 
@@ -45,15 +64,13 @@ namespace PIMTool.Controllers
             return Ok();
         }
 
-        
-
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmployee(int id, CancellationToken cancellationToken)
         {
             var employee = _employeeService.GetEmployeeIdAsync(id, cancellationToken);
-            if(employee == null)
+            if (employee == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
             await _employeeService.UpdateEmployeeAsync(await employee, cancellationToken);
             return Ok();
@@ -63,9 +80,9 @@ namespace PIMTool.Controllers
         public async Task<IActionResult> DeleteEmployees(int id, CancellationToken cancellationToken)
         {
             var employee = _employeeService.GetEmployeeIdAsync(id, cancellationToken);
-            if(employee == null)
+            if (employee == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
             await _employeeService.DeleteEmployees(id, cancellationToken);
             return Ok();

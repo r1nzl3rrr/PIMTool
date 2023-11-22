@@ -6,6 +6,8 @@ using PIMTool.Core.Interfaces.Services;
 using PIMTool.Core.Specifications;
 using PIMTool.Database;
 using PIMTool.Dtos;
+using PIMTool.Errors;
+using PIMTool.Helpers;
 using PIMTool.Services;
 
 namespace PIMTool.Controllers
@@ -23,18 +25,32 @@ namespace PIMTool.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyCollection<ProjectDto>>> GetProjectsAsync(CancellationToken cancellationToken)
+        public async Task<ActionResult<IReadOnlyCollection<ProjectDto>>> GetProjectsAsync([FromQuery]ProjectSpecParams projectParams, CancellationToken cancellationToken)
         {
-            var spec = new ProjectsWithGroupsSpecification();
+            var spec = new ProjectSpecification(projectParams);
+
+            var countSpec = new ProjectWithFilterForCountSpecification(projectParams);
+
+            var totalItems = await _projectService.CountProjectsAsync(countSpec);
+
             var projects = await _projectService.GetProjectsAsyncWithSpec(spec, cancellationToken);
-            return Ok(_mapper.Map<IReadOnlyCollection<Project>, IReadOnlyCollection<ProjectDto>>(projects));
+
+            var data = _mapper.Map<IReadOnlyCollection<Project>, IReadOnlyCollection<ProjectDto>>(projects);
+
+            return Ok(new Pagination<ProjectDto>(projectParams.PageIndex, projectParams.PageSize, totalItems, data));
         }
 
         [HttpGet("{id}")]
-        public async Task<ProjectDto?> GetProjectIdAsync(int id, CancellationToken cancellationToken = default)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ProjectDto?>> GetProjectIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            var spec = new ProjectsWithGroupsSpecification(id);
+            var spec = new ProjectSpecification(id);
             var project = await _projectService.GetProjectWithSpec(spec, cancellationToken);
+            if (project == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
             return _mapper.Map<Project, ProjectDto>(project);
         }
 
@@ -56,11 +72,11 @@ namespace PIMTool.Controllers
         public async Task<IActionResult> UpdateProject(int id, CancellationToken cancellationToken)
         {
 
-            var spec = new ProjectsWithGroupsSpecification(id);
+            var spec = new ProjectSpecification(id);
             var project = await _projectService.GetProjectWithSpec(spec, cancellationToken);
             if (project == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
             await _projectService.UpdateProjectAsync(project, cancellationToken);
             return Ok();
@@ -72,32 +88,19 @@ namespace PIMTool.Controllers
             var project = GetProjectIdAsync(id, cancellationToken);
             if (project == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
             await _projectService.DeleteProjects(id, cancellationToken);
             return Ok();
         }
 
         [HttpGet("get-employees/{id}")]
-        public async Task<IReadOnlyCollection<Employee>> GetEmployees(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<IReadOnlyCollection<EmployeeDto>>> GetEmployees(int id, CancellationToken cancellationToken)
         {
-            return await _projectService.GetEmployeesByProjectId(id, cancellationToken);
+            var employees = await _projectService.GetEmployeesByProjectId(id, cancellationToken);
+            return Ok(_mapper.Map<IReadOnlyCollection<Employee>, IReadOnlyCollection<EmployeeDto>>(employees));
         }
 
-        [HttpGet("find-projects/{projectName}/{customerName}/{projectStatus}")]
-        public async Task<IReadOnlyCollection<ProjectDto>> FindProjects(string projectName, string customerName, string projectStatus, CancellationToken cancellationToken = default)
-        {
-            var spec = new ProjectsWithGroupsSpecification(projectName, customerName, projectStatus);
-            var projects = await _projectService.GetProjectsAsyncWithSpec(spec, cancellationToken);
-            return _mapper.Map<IReadOnlyCollection<Project>, IReadOnlyCollection<ProjectDto>>(projects);
-        }
-
-        [HttpGet("find-projects-advanced/{projectName}/{customerName}/{projectStatus}/{groupLeaderVisa}")]
-        public async Task<IReadOnlyCollection<ProjectDto>> FindProjectsAdvanced(string projectName, string customerName, string projectStatus, string groupLeaderVisa, CancellationToken cancellationToken = default)
-        {
-            var spec = new ProjectsWithGroupsSpecification(projectName, customerName, projectStatus, groupLeaderVisa);
-            var projects = await _projectService.GetProjectsAsyncWithSpec(spec, cancellationToken);
-            return _mapper.Map<IReadOnlyCollection<Project>, IReadOnlyCollection<ProjectDto>>(projects);
-        }
+        
     }
 }

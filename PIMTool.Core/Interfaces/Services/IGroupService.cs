@@ -9,6 +9,8 @@ namespace PIMTool.Core.Interfaces.Services
 
         Task<Group?> GetGroupWithSpec(ISpecification<Group> spec, CancellationToken cancellationToken);
 
+        Task<int> CountGroupsAsync(ISpecification<Group> spec, CancellationToken cancellationToken = default);
+
         Task AddRangeGroupAsync(IEnumerable<Group> groups, CancellationToken cancellationToken = default);
 
         Task AddGroupAsync(Group group, CancellationToken cancellationToken = default);

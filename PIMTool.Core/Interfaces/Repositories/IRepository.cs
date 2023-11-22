@@ -12,7 +12,7 @@ namespace PIMTool.Core.Interfaces.Repositories
         Task<T?> GetIdAsync(int id, CancellationToken cancellationToken = default);
 
         Task<T?> GetEntityWithSpec(ISpecification<T> spec, CancellationToken cancellationToken);
-
+        Task<int> CountAsync(ISpecification<T> spec, CancellationToken cancellationToken);
         Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
         Task AddAsync(T entity, CancellationToken cancellationToken = default);

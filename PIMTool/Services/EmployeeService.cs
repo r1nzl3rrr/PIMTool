@@ -28,6 +28,11 @@ namespace PIMTool.Services
             await _employeeRepo.AddRangeAsync(employees, cancellationToken);
         }
 
+        public async Task<int> CountEmployeesAsync(ISpecification<Employee> spec, CancellationToken cancellationToken = default)
+        {
+            return await _employeeRepo.CountAsync(spec, cancellationToken);
+        }
+
         public async Task DeleteEmployees(int id, CancellationToken cancellationToken)
         {
             var employee = GetEmployeeIdAsync(id, cancellationToken);
@@ -44,9 +49,9 @@ namespace PIMTool.Services
            return await _employeeRepo.GetIdAsync(id, cancellationToken);
         }
 
-        public async Task<IReadOnlyCollection<Employee>> GetEmployeesAsync(CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<Employee>> GetEmployeesAsyncWithSpec(ISpecification<Employee> spec, CancellationToken cancellationToken)
         {
-            return await _employeeRepo.GetAsync();
+            return await _employeeRepo.GetAsyncWithSpec(spec, cancellationToken);
         }
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
