@@ -13,7 +13,6 @@ namespace PIMTool.Core.Domain.Entities
 
         [Timestamp]
         public byte[] Version { get; set; }
-        public Group Group { get; set; }
         public IList<ProjectEmployee> ProjectEmployee { get; set; }
         
     }

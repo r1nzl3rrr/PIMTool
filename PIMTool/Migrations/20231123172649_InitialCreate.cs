@@ -32,7 +32,7 @@ namespace PIMTool.Migrations
                 {
                     Id = table.Column<decimal>(type: "numeric(19,0)", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Group_Leader_Id = table.Column<decimal>(type: "numeric(19,0)", nullable: false),
+                    Group_Leader_Id = table.Column<decimal>(type: "numeric(19,0)", nullable: true),
                     Version = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
@@ -43,7 +43,7 @@ namespace PIMTool.Migrations
                         column: x => x.Group_Leader_Id,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,7 +52,7 @@ namespace PIMTool.Migrations
                 {
                     Id = table.Column<decimal>(type: "numeric(19,0)", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Group_Id = table.Column<decimal>(type: "numeric(19,0)", nullable: false),
+                    Group_Id = table.Column<decimal>(type: "numeric(19,0)", nullable: true),
                     Project_Number = table.Column<decimal>(type: "numeric(4,0)", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     Customer = table.Column<string>(type: "varchar(50)", nullable: false),
@@ -69,7 +69,7 @@ namespace PIMTool.Migrations
                         column: x => x.Group_Id,
                         principalTable: "Groups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,19 +86,22 @@ namespace PIMTool.Migrations
                         name: "FK_ProjectEmployees_Employees_Employee_Id",
                         column: x => x.Employee_Id,
                         principalTable: "Employees",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProjectEmployees_Projects_Project_Id",
                         column: x => x.Project_Id,
                         principalTable: "Projects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_Group_Leader_Id",
                 table: "Groups",
                 column: "Group_Leader_Id",
-                unique: true);
+                unique: true,
+                filter: "[Group_Leader_Id] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectEmployees_Employee_Id",

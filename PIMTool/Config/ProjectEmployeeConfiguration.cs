@@ -13,15 +13,15 @@ namespace PIMTool.Config
 
             builder.HasKey(pe => new { pe.Project_Id, pe.Employee_Id});
 
-            builder.HasOne<Project>(pe => pe.Project)
+            builder.HasOne(pe => pe.Project)
                     .WithMany(p => p.ProjectEmployee)
                     .HasForeignKey(pe => pe.Project_Id)
-                    .OnDelete(DeleteBehavior.NoAction);
-            
-            builder.HasOne<Employee>(pe => pe.Employee)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(pe => pe.Employee)
                     .WithMany(e => e.ProjectEmployee)
                     .HasForeignKey(pe => pe.Employee_Id)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

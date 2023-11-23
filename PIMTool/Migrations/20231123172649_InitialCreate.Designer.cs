@@ -12,7 +12,7 @@ using PIMTool.Database;
 namespace PIMTool.Migrations
 {
     [DbContext(typeof(PimContext))]
-    [Migration("20231110124817_InitialCreate")]
+    [Migration("20231123172649_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,7 +65,7 @@ namespace PIMTool.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"), 1L, 1);
 
-                    b.Property<decimal>("Group_Leader_Id")
+                    b.Property<decimal?>("Group_Leader_Id")
                         .HasColumnType("numeric(19,0)");
 
                     b.Property<byte[]>("Version")
@@ -77,7 +77,8 @@ namespace PIMTool.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Group_Leader_Id")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Group_Leader_Id] IS NOT NULL");
 
                     b.ToTable("Groups");
                 });
@@ -97,7 +98,7 @@ namespace PIMTool.Migrations
                     b.Property<DateTime>("End_Date")
                         .HasColumnType("date");
 
-                    b.Property<decimal>("Group_Id")
+                    b.Property<decimal?>("Group_Id")
                         .HasColumnType("numeric(19,0)");
 
                     b.Property<string>("Name")
@@ -149,10 +150,9 @@ namespace PIMTool.Migrations
             modelBuilder.Entity("PIMTool.Core.Domain.Entities.Group", b =>
                 {
                     b.HasOne("PIMTool.Core.Domain.Entities.Employee", "Leader")
-                        .WithOne("Group")
+                        .WithOne()
                         .HasForeignKey("PIMTool.Core.Domain.Entities.Group", "Group_Leader_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Leader");
                 });
@@ -162,8 +162,7 @@ namespace PIMTool.Migrations
                     b.HasOne("PIMTool.Core.Domain.Entities.Group", "Group")
                         .WithMany("Projects")
                         .HasForeignKey("Group_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Group");
                 });
@@ -173,13 +172,13 @@ namespace PIMTool.Migrations
                     b.HasOne("PIMTool.Core.Domain.Entities.Employee", "Employee")
                         .WithMany("ProjectEmployee")
                         .HasForeignKey("Employee_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PIMTool.Core.Domain.Entities.Project", "Project")
                         .WithMany("ProjectEmployee")
                         .HasForeignKey("Project_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -189,9 +188,6 @@ namespace PIMTool.Migrations
 
             modelBuilder.Entity("PIMTool.Core.Domain.Entities.Employee", b =>
                 {
-                    b.Navigation("Group")
-                        .IsRequired();
-
                     b.Navigation("ProjectEmployee");
                 });
 

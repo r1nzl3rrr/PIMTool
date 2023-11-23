@@ -35,12 +35,13 @@ namespace PIMTool.Services
 
         public async Task DeleteEmployees(int id, CancellationToken cancellationToken)
         {
-            var employee = GetEmployeeIdAsync(id, cancellationToken);
+            var employee = await GetEmployeeIdAsync(id, cancellationToken);
             if(employee != null)
             {
-                var projectNumbers = _pimContext.ProjectEmployees.Where(pe => pe.Employee_Id == id);
+                var projectNumbers = _pimContext.ProjectEmployees.Where(pe => pe.Employee_Id == id).ToList();
                 _pimContext.ProjectEmployees.RemoveRange(projectNumbers);
-                await _employeeRepo.Delete(await employee, cancellationToken);
+                await _pimContext.SaveChangesAsync(cancellationToken);
+                await _employeeRepo.Delete(employee, cancellationToken);
             }
         }
 

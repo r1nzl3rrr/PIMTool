@@ -15,7 +15,6 @@ namespace PIMTool.Test
         {
             var services = new ServiceCollection();
             services.AddDbContext<PimContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
-            services.Register();
             ServiceProvider = services.BuildServiceProvider();
             Context = ServiceProvider.GetRequiredService<PimContext>();
         }

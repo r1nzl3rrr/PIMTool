@@ -6,8 +6,8 @@ namespace PIMTool.Core.Domain.Entities
 {
     public class Project : BaseEntity
     {
-        public int Group_Id { get; set; }
-        public Group Group { get; set; }
+        public int? Group_Id { get; set; }
+        public Group? Group { get; set; }
         
         public int Project_Number { get; set; }
 

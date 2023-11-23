@@ -25,7 +25,7 @@ namespace PIMTool.Repositories
 
         public async Task<T?> GetIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _set.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _set.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
