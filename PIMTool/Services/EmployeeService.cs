@@ -21,11 +21,6 @@ namespace PIMTool.Services
             await _employeeRepo.AddAsync(employee, cancellationToken);
         }
 
-        public async Task AddRangeEmployeeAsync(IList<Employee> employees)
-        {
-            await _employeeRepo.AddRangeAsync(employees);
-        }
-
         public async Task<int> CountEmployeesAsync(ISpecification<Employee> spec, CancellationToken cancellationToken = default)
         {
             return await _employeeRepo.CountAsync(spec, cancellationToken);

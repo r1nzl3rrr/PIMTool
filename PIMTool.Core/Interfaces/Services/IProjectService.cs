@@ -14,7 +14,6 @@ namespace PIMTool.Core.Interfaces.Services
         Task<int> CountProjectsAsync(ISpecification<Project> spec, CancellationToken cancellationToken = default);
 
         Task AddProjectAsync(Project project, CancellationToken cancellationToken = default);
-        Task AddRangeProjectAsync(IList<Project> projects);
 
         Task DeleteProject(Project project, CancellationToken cancellationToken);
 
