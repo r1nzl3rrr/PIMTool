@@ -1,0 +1,47 @@
+[
+  {
+    "Group_Id": 1,
+    "Project_Number": 3345,
+    "Name": "EFV",
+    "Customer": "John Adams",
+    "Status": "NEW",
+    "Start_Date": "2023-08-01",
+    "End_Date": "2023-09-02"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 6573,
+    "Name": "CXTRANET",
+    "Customer": "Roxane Jones",
+    "Status": "INP",
+    "Start_Date": "2022-07-01",
+    "End_Date": "2023-01-31"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 2355,
+    "Name": "CRYSTAL BALL",
+    "Customer": "Francis Kahns",
+    "Status": "FIN",
+    "Start_Date": "2021-02-16",
+    "End_Date": "2022-02-27"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 8564,
+    "Name": "IOC CLIENT EXTRANET",
+    "Customer": "Alex Jones",
+    "Status": "PLA",
+    "Start_Date": "2020-02-23",
+    "End_Date": "2022-01-12"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 3543,
+    "Name": "KSTA MIGRATION",
+    "Customer": "Lebron James",
+    "Status": "INP",
+    "Start_Date": "2023-08-12",
+    "End_Date": "2023-10-22"
+  }
+]

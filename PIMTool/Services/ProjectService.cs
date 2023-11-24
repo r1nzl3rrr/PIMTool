@@ -37,6 +37,10 @@ namespace PIMTool.Services
             await _projectRepo.AddAsync(project, cancellationToken);
         }
 
+        public async Task AddRangeProjectAsync(IList<Project> projects)
+        {
+            await _projectRepo.AddRangeAsync(projects);
+        }
         public async Task DeleteProject(Project project, CancellationToken cancellationToken)
         {
             await _projectRepo.Delete(project, cancellationToken);

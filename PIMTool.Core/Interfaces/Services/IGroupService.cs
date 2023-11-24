@@ -13,6 +13,8 @@ namespace PIMTool.Core.Interfaces.Services
 
         Task AddGroupAsync(Group group, CancellationToken cancellationToken = default);
 
+        Task AddRangeGroupAsync(IList<Group> groups);
+
         Task UpdateGroupAsync(Group group, CancellationToken cancellationToken = default);
 
         Task DeleteGroup(Group group, CancellationToken cancellationToken);
