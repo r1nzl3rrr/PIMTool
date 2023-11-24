@@ -32,30 +32,14 @@ namespace PIMTool.Services
             return await _projectRepo.GetEntityWithSpec(spec, cancellationToken);
         }
 
-        public async Task AddRangeProjectAsync(IEnumerable<Project> projects, CancellationToken cancellationToken = default)
-        {
-            await _projectRepo.AddRangeAsync(projects, cancellationToken);
-        }
-
         public async Task AddProjectAsync(Project project, CancellationToken cancellationToken = default)
         {
             await _projectRepo.AddAsync(project, cancellationToken);
         }
 
-        public async Task DeleteProjects(int id, CancellationToken cancellationToken)
+        public async Task DeleteProject(Project project, CancellationToken cancellationToken)
         {
-            var project = _projectRepo.GetIdAsync(id, cancellationToken);
-            if (project != null)
-            {
-                var employeeNumbers = _pimContext.ProjectEmployees.Where(pe => pe.Project_Id== id);
-                _pimContext.ProjectEmployees.RemoveRange(employeeNumbers);
-                await _projectRepo.Delete(await project, cancellationToken);
-            }
-        }
-
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            await _projectRepo.SaveChangesAsync(cancellationToken);
+            await _projectRepo.Delete(project, cancellationToken);
         }
 
         public async Task<IReadOnlyCollection<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken)

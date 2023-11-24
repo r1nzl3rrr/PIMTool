@@ -19,11 +19,6 @@ namespace PIMTool.Services
             await _groupRepo.AddAsync(group, cancellationToken);
         }
 
-        public async Task AddRangeGroupAsync(IEnumerable<Group> groups, CancellationToken cancellationToken = default)
-        {
-            await _groupRepo.AddRangeAsync(groups, cancellationToken);          
-        }
-
         public async Task<IReadOnlyCollection<Group>> GetGroupsAsyncWithSpec(ISpecification<Group> spec, CancellationToken cancellationToken)
         {
             return await _groupRepo.GetAsyncWithSpec(spec, cancellationToken);
@@ -38,14 +33,14 @@ namespace PIMTool.Services
             await _groupRepo.UpdateAsync(group, cancellationToken);
         }
 
+        public async Task DeleteGroup(Group group, CancellationToken cancellationToken)
+        {
+            await _groupRepo.Delete(group, cancellationToken);
+        }
+
         public async Task<int> CountGroupsAsync(ISpecification<Group> spec, CancellationToken cancellationToken = default)
         {
             return await _groupRepo.CountAsync(spec, cancellationToken);
-        }
-
-        public Task SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            return _groupRepo.SaveChangesAsync(cancellationToken);
         }
         
     }

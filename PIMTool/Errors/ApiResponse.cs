@@ -1,4 +1,6 @@
-﻿namespace PIMTool.Errors
+﻿using System.Diagnostics;
+
+namespace PIMTool.Errors
 {
     public class ApiResponse
     {
@@ -15,6 +17,7 @@
         {
             return statusCode switch
             {
+                200 => "Request processed successfully",
                 400 => "You have made a Bad Request",
                 401 => "You are not Authorized",
                 404 => "No resource was found",

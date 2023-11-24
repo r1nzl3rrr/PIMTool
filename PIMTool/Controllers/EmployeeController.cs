@@ -1,5 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PIMTool.AddingAndUpdatingDtos;
 using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Services;
 using PIMTool.Core.Specifications;
@@ -21,7 +23,7 @@ namespace PIMTool.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Pagination<EmployeeDto>>> GetEmployeesAsync([FromQuery]EmployeeSpecParams employeeParams, 
+        public async Task<ActionResult<Pagination<EmployeeDto>>> GetEmployeesAsync([FromQuery] EmployeeSpecParams employeeParams, 
             CancellationToken cancellationToken)
         {
             var spec = new EmployeeSpecification(employeeParams);
@@ -51,41 +53,53 @@ namespace PIMTool.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEmployee(Employee employee, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> AddEmployee([FromBody] AddingAndUpdatingEmployeeDto employee, CancellationToken cancellationToken)
         {
-            await _employeeService.AddEmployeeAsync(employee, cancellationToken);
-            return Ok();
-        }
+            Employee newEmployee = new()
+            {
+                First_Name = employee.First_Name,
+                Last_Name = employee.Last_Name,
+                Birth_Date = employee.Birth_Date,
+                Visa = employee.Visa
+            };
 
-        [HttpPost("range")]
-        public async Task<IActionResult> AddRangeEmployee(IEnumerable<Employee> employees, CancellationToken cancellationToken)
-        {
-            await _employeeService.AddRangeEmployeeAsync(employees, cancellationToken);
-            return Ok();
+            await _employeeService.AddEmployeeAsync(newEmployee, cancellationToken);
+            return Ok(new ApiResponse(200));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(int id, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] AddingAndUpdatingEmployeeDto employee, CancellationToken cancellationToken)
         {
-            var employee = _employeeService.GetEmployeeIdAsync(id, cancellationToken);
-            if (employee == null)
+            var updatingEmployee = await _employeeService.GetEmployeeIdAsync(id, cancellationToken);
+
+            if (updatingEmployee == null)
             {
                 return NotFound(new ApiResponse(404));
             }
-            await _employeeService.UpdateEmployeeAsync(await employee, cancellationToken);
-            return Ok();
+            updatingEmployee.Birth_Date = employee.Birth_Date;
+            updatingEmployee.First_Name = employee.First_Name;  
+            updatingEmployee.Last_Name = employee.Last_Name;
+            updatingEmployee.Visa = employee.Visa;
+
+            await _employeeService.UpdateEmployeeAsync(updatingEmployee, cancellationToken);
+            return Ok(new ApiResponse(200));
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteEmployees(int id, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteEmployee(int id, CancellationToken cancellationToken)
         {
-            var employee = _employeeService.GetEmployeeIdAsync(id, cancellationToken);
+            var employee = await _employeeService.GetEmployeeIdAsync(id, cancellationToken);
             if (employee == null)
             {
                 return NotFound(new ApiResponse(404));
             }
-            await _employeeService.DeleteEmployees(id, cancellationToken);
-            return Ok();
+            await _employeeService.DeleteEmployee(employee, cancellationToken);
+            return Ok(new ApiResponse(200));
         }
 
     }

@@ -13,14 +13,10 @@ namespace PIMTool.Core.Interfaces.Services
         Task<IReadOnlyCollection<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken);
         Task<int> CountProjectsAsync(ISpecification<Project> spec, CancellationToken cancellationToken = default);
 
-        Task AddRangeProjectAsync(IEnumerable<Project> projects, CancellationToken cancellationToken = default);
-
         Task AddProjectAsync(Project project, CancellationToken cancellationToken = default);
 
-        Task DeleteProjects(int id, CancellationToken cancellationToken);
+        Task DeleteProject(Project project, CancellationToken cancellationToken);
 
         Task UpdateProjectAsync(Project project, CancellationToken cancellationToken = default);
-
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

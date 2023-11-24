@@ -12,8 +12,8 @@ namespace PIMTool.Core.Domain.Entities
         public DateTime Birth_Date { get; set; }
 
         [Timestamp]
-        public byte[] Version { get; set; }
-        public IList<ProjectEmployee> ProjectEmployee { get; set; }
+        public byte[]? Version { get; set; }
+        public IList<ProjectEmployee>? ProjectEmployee { get; set; }
         
     }
 }

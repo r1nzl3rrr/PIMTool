@@ -10,12 +10,10 @@ namespace PIMTool.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IRepository<Employee> _employeeRepo;
-        private readonly PimContext _pimContext;
 
         public EmployeeService(IRepository<Employee> employeeRepo, PimContext pimContext)
         {
             _employeeRepo = employeeRepo;
-            _pimContext = pimContext;
         }
 
         public async Task AddEmployeeAsync(Employee employee, CancellationToken cancellationToken = default)
@@ -23,26 +21,14 @@ namespace PIMTool.Services
             await _employeeRepo.AddAsync(employee, cancellationToken);
         }
 
-        public async Task AddRangeEmployeeAsync(IEnumerable<Employee> employees, CancellationToken cancellationToken = default)
-        {
-            await _employeeRepo.AddRangeAsync(employees, cancellationToken);
-        }
-
         public async Task<int> CountEmployeesAsync(ISpecification<Employee> spec, CancellationToken cancellationToken = default)
         {
             return await _employeeRepo.CountAsync(spec, cancellationToken);
         }
 
-        public async Task DeleteEmployees(int id, CancellationToken cancellationToken)
+        public async Task DeleteEmployee(Employee employee, CancellationToken cancellationToken)
         {
-            var employee = await GetEmployeeIdAsync(id, cancellationToken);
-            if(employee != null)
-            {
-                var projectNumbers = _pimContext.ProjectEmployees.Where(pe => pe.Employee_Id == id).ToList();
-                _pimContext.ProjectEmployees.RemoveRange(projectNumbers);
-                await _pimContext.SaveChangesAsync(cancellationToken);
-                await _employeeRepo.Delete(employee, cancellationToken);
-            }
+            await _employeeRepo.Delete(employee, cancellationToken);
         }
 
         public async Task<Employee?> GetEmployeeIdAsync(int id, CancellationToken cancellationToken = default)
@@ -53,11 +39,6 @@ namespace PIMTool.Services
         public async Task<IReadOnlyCollection<Employee>> GetEmployeesAsyncWithSpec(ISpecification<Employee> spec, CancellationToken cancellationToken)
         {
             return await _employeeRepo.GetAsyncWithSpec(spec, cancellationToken);
-        }
-
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            await _employeeRepo.SaveChangesAsync(cancellationToken);
         }
 
         public async Task UpdateEmployeeAsync(Employee employee, CancellationToken cancellationToken)

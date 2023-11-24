@@ -1,14 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PIMTool.AddingAndUpdatingDtos;
 using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Services;
 using PIMTool.Core.Specifications;
-using PIMTool.Database;
 using PIMTool.Dtos;
 using PIMTool.Errors;
 using PIMTool.Helpers;
-using PIMTool.Services;
 
 namespace PIMTool.Controllers
 {
@@ -55,43 +53,47 @@ namespace PIMTool.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProject(Project project, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> AddProject(AddingAndUpdatingProjectDto project, CancellationToken cancellationToken)
         {
-            await _projectService.AddProjectAsync(project, cancellationToken);
-            return Ok();
-        }
+            Project newProject = new()
+            {
+                Group_Id = project.Group_Id,
+                Project_Number = project.Project_Number,
+                Name = project.Name,
+                Customer = project.Customer,
+                Status = project.Status,
+                Start_Date = project.Start_Date,
+                End_Date = project.End_Date,
+            };
 
-        [HttpPost("range")]
-        public async Task<IActionResult> AddRangeProject(IEnumerable<Project> projects, CancellationToken cancellationToken)
-        {
-            await _projectService.AddRangeProjectAsync(projects, cancellationToken);
-            return Ok();
+            await _projectService.AddProjectAsync(newProject, cancellationToken);
+            return Ok(new ApiResponse(200));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProject(int id, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateProject(int id, AddingAndUpdatingProjectDto project, CancellationToken cancellationToken)
         {
-
             var spec = new ProjectSpecification(id);
-            var project = await _projectService.GetProjectWithSpec(spec, cancellationToken);
-            if (project == null)
-            {
-                return NotFound(new ApiResponse(404));
-            }
-            await _projectService.UpdateProjectAsync(project, cancellationToken);
-            return Ok();
-        }
+            var updatingProject = await _projectService.GetProjectWithSpec(spec, cancellationToken);
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteProjects(int id, CancellationToken cancellationToken)
-        {
-            var project = GetProjectIdAsync(id, cancellationToken);
-            if (project == null)
+            if (updatingProject == null)
             {
                 return NotFound(new ApiResponse(404));
             }
-            await _projectService.DeleteProjects(id, cancellationToken);
-            return Ok();
+
+            updatingProject.Group_Id = project.Group_Id;
+            updatingProject.Project_Number = project.Project_Number;
+            updatingProject.Name = project.Name;
+            updatingProject.Customer = project.Customer;
+            updatingProject.Status = project.Status;
+            updatingProject.Start_Date = project.Start_Date;
+            updatingProject.End_Date = project.End_Date;
+
+            await _projectService.UpdateProjectAsync(updatingProject, cancellationToken);
+            return Ok(new ApiResponse(200));
         }
 
         [HttpGet("get-employees/{id}")]
@@ -100,6 +102,23 @@ namespace PIMTool.Controllers
             var employees = await _projectService.GetEmployeesByProjectId(id, cancellationToken);
             return Ok(_mapper.Map<IReadOnlyCollection<Employee>, IReadOnlyCollection<EmployeeDto>>(employees));
         }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteProject(int id, CancellationToken cancellationToken)
+        {
+            var spec = new ProjectSpecification(id);
+            var project = await _projectService.GetProjectWithSpec(spec, cancellationToken);
+            if (project == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+            await _projectService.DeleteProject(project, cancellationToken);
+            return Ok(new ApiResponse(200));
+        }
+
+        
 
         
     }

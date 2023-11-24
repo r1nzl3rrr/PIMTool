@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PIMTool.AddingAndUpdatingDtos;
 using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Services;
 using PIMTool.Core.Specifications;
 using PIMTool.Dtos;
 using PIMTool.Errors;
 using PIMTool.Helpers;
-using PIMTool.Services;
 
 namespace PIMTool.Controllers
 {
@@ -68,21 +68,40 @@ namespace PIMTool.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddGroup(Group group, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddGroup([FromBody] AddingAndUpdatingGroupDto group, CancellationToken cancellationToken)
         {
-            await _groupService.AddGroupAsync(group, cancellationToken);
-            return Ok();
-        }
-
-        [HttpPost("range")]
-        public async Task<IActionResult> AddRangeGroup(IEnumerable<Group> groups, CancellationToken cancellationToken)
-        {
-            await _groupService.AddRangeGroupAsync(groups, cancellationToken);
-            return Ok();
+            Group newGroup = new()
+            {
+                Group_Leader_Id = group.Group_Leader_Id
+            };
+            await _groupService.AddGroupAsync(newGroup, cancellationToken);
+            return Ok(new ApiResponse(200));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGroup(int id, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateGroup(int id, AddingAndUpdatingGroupDto group, CancellationToken cancellationToken)
+        {
+            var spec = new GroupSpecification(id);
+            var updatingGroup = await _groupService.GetGroupWithSpec(spec, cancellationToken);
+
+            if (updatingGroup == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+
+            updatingGroup.Group_Leader_Id = group.Group_Leader_Id;
+
+            await _groupService.UpdateGroupAsync(updatingGroup, cancellationToken);
+            return Ok(new ApiResponse(200));
+        }
+
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteGroup(int id, CancellationToken cancellationToken)
         {
             var spec = new GroupSpecification(id);
             var group = await _groupService.GetGroupWithSpec(spec, cancellationToken);
@@ -90,9 +109,8 @@ namespace PIMTool.Controllers
             {
                 return NotFound(new ApiResponse(404));
             }
-            await _groupService.UpdateGroupAsync(group, cancellationToken);
-            return Ok();
+            await _groupService.DeleteGroup(group, cancellationToken);
+            return Ok(new ApiResponse(200));
         }
-
     }
 }

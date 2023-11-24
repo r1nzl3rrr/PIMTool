@@ -11,12 +11,9 @@ namespace PIMTool.Core.Interfaces.Services
 
         Task<int> CountEmployeesAsync(ISpecification<Employee> spec, CancellationToken cancellationToken = default);
 
-        Task AddRangeEmployeeAsync(IEnumerable<Employee> employees, CancellationToken cancellationToken = default);
-
         Task AddEmployeeAsync(Employee employee, CancellationToken cancellationToken = default);
 
-        Task DeleteEmployees(int id, CancellationToken cancellationToken);
+        Task DeleteEmployee(Employee employee, CancellationToken cancellationToken);
         Task UpdateEmployeeAsync(Employee employee, CancellationToken cancellationToken);
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

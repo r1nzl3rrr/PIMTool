@@ -11,13 +11,11 @@ namespace PIMTool.Core.Interfaces.Services
 
         Task<int> CountGroupsAsync(ISpecification<Group> spec, CancellationToken cancellationToken = default);
 
-        Task AddRangeGroupAsync(IEnumerable<Group> groups, CancellationToken cancellationToken = default);
-
         Task AddGroupAsync(Group group, CancellationToken cancellationToken = default);
 
         Task UpdateGroupAsync(Group group, CancellationToken cancellationToken = default);
 
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task DeleteGroup(Group group, CancellationToken cancellationToken);
 
     }
 }
