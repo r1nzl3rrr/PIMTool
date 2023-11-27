@@ -1,0 +1,58 @@
+
+header{
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.header-main{
+    margin-left: 6rem;
+}
+
+.header-logo{
+    max-height: 70px;
+}
+
+.header-title{
+    color: rgba(0,0,0,.60);
+    font-weight: bold;
+    margin-top: 1.3rem;
+}
+
+.language-nav{
+    margin-right: 4.5em;
+    margin-top: 1.3rem;
+}
+
+.auth-nav{
+    margin-right: 7rem;
+    margin-top: 1.3rem;
+}
+
+.language-nav .nav-item .nav-link{
+    color: #2F85FA;
+}
+
+.language-nav .nav-item{
+    position: relative;
+}
+
+.language-nav .nav-item:nth-child(2):before{
+    content: '|';
+    position: absolute;
+    top: 7px;
+    left: 2px;
+    color: #2F85FA;
+}
+
+.language-nav .nav-item .nav-link.active{
+    padding-left: 0;
+    color: #333333;
+}
+
+.header-help .nav-link{
+    color: #2F85FA;
+}
+
+.header-logout .nav-link{
+    color: rgba(0,0,0,.30);
+}

@@ -1,0 +1,18 @@
+.nav{
+    min-height: 100vh;
+    font-size: 14px;
+}  
+
+.nav-1 .nav-link, .nav-2 .nav-link{
+    color: #2F85FA;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.nav-3 .nav-link, .nav-4 .nav-link, .nav-5 .nav-link {
+    color: #666666;
+}
+
+.nav-item .nav-link.active{
+    color: #333333;
+}
