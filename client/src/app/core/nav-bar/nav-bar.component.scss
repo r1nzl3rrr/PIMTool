@@ -1,18 +1,20 @@
 .nav{
     min-height: 100vh;
-    font-size: 14px;
 }  
 
-.nav-1 .nav-link, .nav-2 .nav-link{
-    color: #2F85FA;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.nav-3 .nav-link, .nav-4 .nav-link, .nav-5 .nav-link {
+.nav-link{
     color: #666666;
+    font-size: 14px;
+
+    &:nth-child(1), &:nth-child(2){
+        color: #2F85FA;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    &.active{
+        color: #333333;
+        font-weight: 600;
+    }
 }
 
-.nav-item .nav-link.active{
-    color: #333333;
-}

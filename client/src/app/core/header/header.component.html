@@ -1,16 +1,16 @@
 <header class="d-flex flex-wrap justify-content-center p-3 border-bottom">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none header-main">
-      <img src="/assets/images/logo_elca.png" alt="logo" class="header-logo">
+    <a routerLink="/manage" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none header-main">
+      <img src="/assets/images/logo_elca.png" alt="logo" class="logo">
       <h1 class="fs-4 ms-5 header-title">Project Information Management</h1>
     </a>
 
     <ul class="nav language-nav">
-        <li class="nav-item"><a href="#" class="nav-link active px-2">EN</a></li>
-        <li class="nav-item"><a href="#" class="nav-link pe-2">FR</a></li>
+        <li class="nav-item"><a routerLink="/" class="nav-link px-2" routerLinkActive="active">EN</a></li>
+        <li class="nav-item"><a href="/fr/manage" class="nav-link pe-2" routerLinkActive="active">FR</a></li>
     </ul>
 
     <ul class="nav auth-nav">
-        <li class="nav-item header-help"><a href="#" class="nav-link px-5">Help</a></li>
-        <li class="nav-item header-logout"><a href="#" class="nav-link px-2">Log out</a></li>
+        <li class="nav-item header-help"><a routerLink="/help" class="nav-link px-5" routerLinkActive="active">Help</a></li>
+        <li class="nav-item header-logout"><a href="/login" class="nav-link px-2">Log out</a></li>
     </ul>
 </header>

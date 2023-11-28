@@ -8,7 +8,7 @@ header{
     margin-left: 6rem;
 }
 
-.header-logo{
+.logo{
     max-height: 70px;
 }
 
@@ -28,29 +28,32 @@ header{
     margin-top: 1.3rem;
 }
 
-.language-nav .nav-item .nav-link{
-    color: #2F85FA;
-}
-
 .language-nav .nav-item{
     position: relative;
+
+    &:nth-child(2):before{
+        content: '|';
+        position: absolute;
+        top: 7px;
+        left: 2px;
+        color: #2F85FA;
+    }
 }
 
-.language-nav .nav-item:nth-child(2):before{
-    content: '|';
-    position: absolute;
-    top: 7px;
-    left: 2px;
+.language-nav .nav-item .nav-link{
     color: #2F85FA;
-}
 
-.language-nav .nav-item .nav-link.active{
-    padding-left: 0;
-    color: #333333;
+    &.active{
+        color: #333333;
+    }
 }
 
 .header-help .nav-link{
     color: #2F85FA;
+
+    &.active{
+        color: #333333;
+    }
 }
 
 .header-logout .nav-link{
