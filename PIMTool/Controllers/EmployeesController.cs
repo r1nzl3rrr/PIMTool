@@ -11,12 +11,12 @@ using PIMTool.Helpers;
 
 namespace PIMTool.Controllers
 {
-    public class EmployeeController : BaseApiController
+    public class EmployeesController : BaseApiController
     {
         private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeService employeeService, IMapper mapper)
+        public EmployeesController(IEmployeeService employeeService, IMapper mapper)
         {
             _employeeService = employeeService;
             _mapper = mapper;

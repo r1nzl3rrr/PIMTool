@@ -1,0 +1,40 @@
+.form-control{
+    height: 40px; 
+    width: 28%;
+}
+
+.form-control::placeholder{
+    opacity: .7;
+}
+
+.form-select option{
+    opacity: 0.7;
+}
+
+.form-select{
+    height: 40px; 
+    width: 16%;
+}
+
+.title{
+    font-size: 18pt; 
+    font-weight: 600; 
+    color: #666666; 
+    width: 92%;
+}
+
+.search-button{
+    height: 45px;
+    font-size: 14pt;
+    font-weight: 600;
+    background-color: #2F85FA;
+    width: 15%;
+}
+
+.reset-button{
+    font-size: 14pt;
+    height: 45px;
+    font-weight: 600;
+    color: #2F85FA;
+    width: 15%;
+}

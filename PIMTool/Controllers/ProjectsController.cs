@@ -10,12 +10,12 @@ using PIMTool.Helpers;
 
 namespace PIMTool.Controllers
 {
-    public class ProjectController : BaseApiController
+    public class ProjectsController : BaseApiController
     {
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
 
-        public ProjectController(IProjectService projectService,
+        public ProjectsController(IProjectService projectService,
             IMapper mapper)
         {
             _projectService = projectService;

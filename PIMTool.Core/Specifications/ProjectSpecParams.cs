@@ -18,31 +18,32 @@ namespace PIMTool.Core.Specifications
         }
         
         public string? Sort { get; set; }
-        public string? SearchProjectName 
+        public int? Number { get; set; }
+        public string? Name 
         { 
-            get => _searchProjectName; 
-            set => _searchProjectName = value.ToLower(); 
+            get => _name; 
+            set => _name = value.ToLower(); 
         }
-        public string? SearchCustomerName 
+        public string? CustomerName 
         {
-            get => _searchCustomerName;
-            set => _searchCustomerName = value.ToLower(); 
+            get => _customerName;
+            set => _customerName = value.ToLower(); 
         }
-        public string? SearchProjectStatusCode 
+        public string? StatusCode 
         { 
-            get => _searchProjectStatusCode; 
-            set => _searchProjectStatusCode = value.ToLower(); 
+            get => _statusCode; 
+            set => _statusCode = value.ToLower(); 
         }
-        public string? SearchGroupLeaderVisa 
+        public string? GroupLeaderVisa 
         {
-            get => _searchGroupLeaderVisa; 
-            set => _searchGroupLeaderVisa = value.ToLower(); 
+            get => _groupLeaderVisa; 
+            set => _groupLeaderVisa = value.ToLower(); 
         }
 
-        private string? _searchProjectName;
-        private string? _searchCustomerName;
-        private string? _searchProjectStatusCode;
-        private string? _searchGroupLeaderVisa;
+        private string? _name;
+        private string? _customerName;
+        private string? _statusCode;
+        private string? _groupLeaderVisa;
 
         
     }

@@ -10,12 +10,12 @@ using PIMTool.Helpers;
 
 namespace PIMTool.Controllers
 {
-    public class GroupController : BaseApiController
+    public class GroupsController : BaseApiController
     {
         private readonly IGroupService _groupService;
         private readonly IMapper _mapper;
 
-        public GroupController(IGroupService groupService, IMapper mapper)
+        public GroupsController(IGroupService groupService, IMapper mapper)
         {
             _groupService = groupService;
             _mapper = mapper;

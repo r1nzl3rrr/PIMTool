@@ -6,14 +6,15 @@ namespace PIMTool.Core.Specifications
     {
         public ProjectSpecification(ProjectSpecParams projectParams)
             : base(x =>
-                (string.IsNullOrEmpty(projectParams.SearchProjectName) || x.Name.ToLower().Contains
-                (projectParams.SearchProjectName)) &&
-                (string.IsNullOrEmpty(projectParams.SearchCustomerName) || x.Customer.ToLower().Contains
-                (projectParams.SearchCustomerName)) &&
-                (string.IsNullOrEmpty(projectParams.SearchProjectStatusCode) || x.Status.ToLower().Equals
-                (projectParams.SearchProjectStatusCode)) &&
-                (string.IsNullOrEmpty(projectParams.SearchGroupLeaderVisa) || x.Group.Leader.Visa.ToLower().Equals
-                (projectParams.SearchGroupLeaderVisa))
+                (!projectParams.Number.HasValue || x.Project_Number == projectParams.Number) &&
+                (string.IsNullOrEmpty(projectParams.Name) || x.Name.ToLower().Contains
+                (projectParams.Name)) &&
+                (string.IsNullOrEmpty(projectParams.CustomerName) || x.Customer.ToLower().Contains
+                (projectParams.CustomerName)) &&
+                (string.IsNullOrEmpty(projectParams.StatusCode) || x.Status.ToLower().Equals
+                (projectParams.StatusCode)) &&
+                (string.IsNullOrEmpty(projectParams.GroupLeaderVisa) || x.Group.Leader.Visa.ToLower().Equals
+                (projectParams.GroupLeaderVisa))
             )
         {
             AddInclude(x => x.Group);
