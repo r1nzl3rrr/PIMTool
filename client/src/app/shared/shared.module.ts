@@ -11,7 +11,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
   ],
   imports: [
     CommonModule,
-    PaginationModule
+    PaginationModule.forRoot()
   ],
   exports: [
     PaginationModule,

@@ -9,15 +9,17 @@ import { ManageService } from './manage.service';
   styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent implements OnInit{
-  @ViewChild('name') name?: ElementRef;
-  @ViewChild('number') number?: ElementRef;
-  @ViewChild('customerName') customerName?: ElementRef;
-  @ViewChild('statusCode') statusCode?: ElementRef;
-  @ViewChild('groupLeaderVisa') groupLeaderVisa?: ElementRef;
+  @ViewChild('search') searchTerm?: ElementRef;
 
   projects: Project[] = [];
   manageParams = new ManageParams;
   totalCount = 0;
+  statusOptions = [
+    {name: 'New', value: 'NEW'},
+    {name: 'Planned', value: 'PLA'},
+    {name: 'In progress', value: 'INP'},
+    {name: 'Finished', value: 'FIN'},
+  ]
 
   constructor(private manageService: ManageService) {}
 
@@ -44,22 +46,22 @@ export class ManageComponent implements OnInit{
     }
   }
 
+  onStatusSelected(event: any) {
+    this.manageParams.statusCode = event.target.value;
+    this.getProjects();
+  }
+
   onSearch() {
-    this.manageParams.name = this.name?.nativeElement.value;
-    this.manageParams.customerName = this.customerName?.nativeElement.value;
-    this.manageParams.statusCode = this.statusCode?.nativeElement.value;
-    this.manageParams.groupLeaderVisa = this.groupLeaderVisa?.nativeElement.value;
-    this.manageParams.number = +this.number?.nativeElement.value;
+    this.manageParams.name = this.searchTerm?.nativeElement.value;
+    this.manageParams.customerName = this.searchTerm?.nativeElement.value;
+    this.manageParams.groupLeaderVisa = this.searchTerm?.nativeElement.value;
+    this.manageParams.number = +this.searchTerm?.nativeElement.value;
     this.manageParams.pageNumber = 1;
     this.getProjects();
   }
 
   onReset(){
-    if(this.name) this.name.nativeElement.value = '';
-    if(this.customerName) this.customerName.nativeElement.value = '';
-    if(this.statusCode) this.statusCode.nativeElement.value = '';
-    if(this.groupLeaderVisa) this.groupLeaderVisa.nativeElement.value = '';
-    if(this.number) this.number.nativeElement.value = 0;
+    if(this.searchTerm) this.searchTerm.nativeElement.value = '';
     this.manageParams = new ManageParams();
     this.getProjects();
   }
