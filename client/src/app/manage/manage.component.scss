@@ -1,26 +1,32 @@
 .form-control{
     height: 40px; 
-    width: 28%;
+    width: 30%;
 }
 
 .form-control::placeholder{
-    opacity: 0.7;
-}
-
-.form-select option{
-    opacity: 0.7;
+    color: rgba(0,0,0,0.5);
 }
 
 .form-select{
+    color: rgba(0,0,0,0.5);
+    background-image: url('../../assets/images/arrow-217-24.ico');
+    background-size: 15px 15px;
+}
+
+.form-select option:disabled {
+    color: grey;
+  }
+
+.form-select{
     height: 40px; 
-    width: 16%;
+    width: 18%;
 }
 
 .title{
     font-size: 18pt; 
     font-weight: 600; 
     color: #666666; 
-    width: 92%;
+    width: 96%;
 }
 
 .search-button{
@@ -28,7 +34,7 @@
     font-size: 14pt;
     font-weight: 600;
     background-color: #2F85FA;
-    width: 15%;
+    width: 17%;
 }
 
 .reset-button{
@@ -36,5 +42,82 @@
     height: 45px;
     font-weight: 600;
     color: #2F85FA;
-    width: 15%;
+    width: 17%;
+    border: none;
 }
+
+thead{
+    height: 32px;
+}
+
+th{
+    &:first-child{
+        width: 4%;
+        border-left: 1px solid rgba(0,0,0,0.4);
+    }
+    &:nth-child(2){
+        width: 8%;
+    }
+    &:nth-child(3){
+        width: 35%;
+    }
+    &:nth-child(4){
+        width: 11%;
+    }
+    &:nth-child(5){
+        width: 24%;
+    }
+    &:nth-child(6){
+        width: 10%;
+        border-right: none;
+    }
+    &:last-child{
+        width: 8%;
+        border-right: 1px solid rgba(0,0,0,0.4);
+        border-left: 1px solid rgba(0,0,0,0.4);
+    }
+    padding-left: 20px;
+    font-weight: 400;
+    color: #666666;
+    font-size: 14pt;
+    border-right: 1px solid rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(0,0,0,0.4);
+}
+
+td{
+    padding-left: 20px;
+    font-weight: 600;
+    color: #666666;
+    font-size: 14pt;
+    &:first-child{
+        padding-left: 8px;
+        border-left: 1px solid rgba(0,0,0,0.4);
+        
+    }
+    &:nth-child(2){
+        padding-left: 8px;
+        padding-right: 20px;
+    }
+    &:nth-child(6){
+        border-right: none;
+    }
+    &:last-child{
+        padding-left: 8px;
+        border-left: 1px solid rgba(0,0,0,0.4);
+        border-right: 1px solid rgba(0,0,0,0.4); 
+    }
+    padding: 20px 8px 20px 20px;
+    border-right: 1px solid rgba(0,0,0,0.2);
+    border-left: 1px solid black;
+    border-bottom: none;
+}
+
+tr:last-child{
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+table{
+    border-collapse: collapse;
+}
+
+

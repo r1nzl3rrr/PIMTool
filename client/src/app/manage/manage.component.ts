@@ -3,6 +3,7 @@ import { Project } from '../shared/models/project';
 import { ManageParams } from '../shared/models/manageParams';
 import { ManageService } from './manage.service';
 
+
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
@@ -40,6 +41,11 @@ export class ManageComponent implements OnInit{
     })
   }
 
+  getStatusName(status: string): string {
+    const foundStatus = this.statusOptions.find(option => option.value === status);
+    return foundStatus ? foundStatus.name : '';
+  }
+
   onPageChanged(event: any){
     if(this.manageParams.pageNumber !== event){
       this.manageParams.pageNumber = event;
@@ -49,6 +55,7 @@ export class ManageComponent implements OnInit{
 
   onStatusSelected(event: any) {
     this.manageParams.statusCode = event.target.value;
+    if(this.selectElement) this.selectElement.nativeElement.style.color ='#333333';
     this.getProjects();
   }
 
@@ -61,7 +68,10 @@ export class ManageComponent implements OnInit{
   onReset(){
     if(this.searchTerm) this.searchTerm.nativeElement.value = '';
     this.manageParams = new ManageParams();
-    if(this.selectElement) this.selectElement.nativeElement.selectedIndex = 0;
+    if(this.selectElement){
+      this.selectElement.nativeElement.selectedIndex = 0;
+      this.selectElement.nativeElement.style.color ='rgba(0,0,0,0.5)';
+    } 
     this.getProjects();
   }
 }

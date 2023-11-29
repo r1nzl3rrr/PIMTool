@@ -1,7 +1,7 @@
 export class ManageParams {
     sort = 'numberAsc';
     pageNumber = 1;
-    pageSize = 2;
+    pageSize = 5;
     search = '';
     statusCode = '';
 }
