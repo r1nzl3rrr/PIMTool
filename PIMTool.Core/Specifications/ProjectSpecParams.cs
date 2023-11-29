@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace PIMTool.Core.Specifications
 {
     public class ProjectSpecParams
@@ -18,32 +13,14 @@ namespace PIMTool.Core.Specifications
         }
         
         public string? Sort { get; set; }
-        public int? Number { get; set; }
-        public string? Name 
+        public string? Search 
         { 
-            get => _name; 
-            set => _name = value.ToLower(); 
+            get => _search; 
+            set => _search = value.ToLower(); 
         }
-        public string? CustomerName 
-        {
-            get => _customerName;
-            set => _customerName = value.ToLower(); 
-        }
-        public string? StatusCode 
-        { 
-            get => _statusCode; 
-            set => _statusCode = value.ToLower(); 
-        }
-        public string? GroupLeaderVisa 
-        {
-            get => _groupLeaderVisa; 
-            set => _groupLeaderVisa = value.ToLower(); 
-        }
+        public string? StatusCode { get; set; }
+        private string? _search;
 
-        private string? _name;
-        private string? _customerName;
-        private string? _statusCode;
-        private string? _groupLeaderVisa;
 
         
     }

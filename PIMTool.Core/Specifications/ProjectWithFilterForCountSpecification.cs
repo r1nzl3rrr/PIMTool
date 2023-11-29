@@ -6,18 +6,17 @@ namespace PIMTool.Core.Specifications
     {
         public ProjectWithFilterForCountSpecification(ProjectSpecParams projectParams)
             : base(x =>
-                (!projectParams.Number.HasValue || x.Project_Number == projectParams.Number) &&
-                (string.IsNullOrEmpty(projectParams.StatusCode) || x.Status.ToLower().Equals
+                (string.IsNullOrEmpty(projectParams.StatusCode) || x.Status.Equals
                 (projectParams.StatusCode)) &&
-                ((string.IsNullOrEmpty(projectParams.Name) || x.Name.ToLower().Contains
-                (projectParams.Name)) ||
-                (string.IsNullOrEmpty(projectParams.CustomerName) || x.Customer.ToLower().Contains
-                (projectParams.CustomerName)) ||
-                (string.IsNullOrEmpty(projectParams.GroupLeaderVisa) || x.Group.Leader.Visa.ToLower().Equals
-                (projectParams.GroupLeaderVisa)))
+                (string.IsNullOrEmpty
+                (projectParams.Search) || x.Project_Number.ToString().Equals
+                (projectParams.Search) || x.Name.ToLower().Contains
+                (projectParams.Search) || x.Customer.ToLower().Contains
+                (projectParams.Search) || x.Group.Leader.Visa.ToLower().Equals(projectParams.Search)
+                )
             )
         {
-
+            
         }
     }
 }

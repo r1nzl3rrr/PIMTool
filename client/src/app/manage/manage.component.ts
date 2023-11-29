@@ -9,6 +9,7 @@ import { ManageService } from './manage.service';
   styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent implements OnInit{
+  @ViewChild('select') selectElement?: ElementRef;
   @ViewChild('search') searchTerm?: ElementRef;
 
   projects: Project[] = [];
@@ -52,23 +53,15 @@ export class ManageComponent implements OnInit{
   }
 
   onSearch() {
-    var searchTermValue = this.searchTerm?.nativeElement.value;
-    if(!isNaN(+searchTermValue)){
-      this.manageParams.number = +searchTermValue;
-    }
-    else{
-      this.manageParams.name = searchTermValue;
-      this.manageParams.customerName = searchTermValue;
-      this.manageParams.groupLeaderVisa = searchTermValue;
-    }
+    this.manageParams.search = this.searchTerm?.nativeElement.value;
     this.manageParams.pageNumber = 1;
-    
     this.getProjects();
   }
 
   onReset(){
     if(this.searchTerm) this.searchTerm.nativeElement.value = '';
     this.manageParams = new ManageParams();
+    if(this.selectElement) this.selectElement.nativeElement.selectedIndex = 0;
     this.getProjects();
   }
 }
