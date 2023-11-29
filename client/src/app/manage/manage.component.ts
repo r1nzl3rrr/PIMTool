@@ -52,11 +52,17 @@ export class ManageComponent implements OnInit{
   }
 
   onSearch() {
-    this.manageParams.name = this.searchTerm?.nativeElement.value;
-    this.manageParams.customerName = this.searchTerm?.nativeElement.value;
-    this.manageParams.groupLeaderVisa = this.searchTerm?.nativeElement.value;
-    this.manageParams.number = +this.searchTerm?.nativeElement.value;
+    var searchTermValue = this.searchTerm?.nativeElement.value;
+    if(!isNaN(+searchTermValue)){
+      this.manageParams.number = +searchTermValue;
+    }
+    else{
+      this.manageParams.name = searchTermValue;
+      this.manageParams.customerName = searchTermValue;
+      this.manageParams.groupLeaderVisa = searchTermValue;
+    }
     this.manageParams.pageNumber = 1;
+    
     this.getProjects();
   }
 
