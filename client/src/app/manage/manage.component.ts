@@ -46,6 +46,10 @@ export class ManageComponent implements OnInit{
     return foundStatus ? foundStatus.name : '';
   }
 
+  isNew(status: string): boolean{
+    return status === 'NEW';
+  }
+
   onPageChanged(event: any){
     if(this.manageParams.pageNumber !== event){
       this.manageParams.pageNumber = event;

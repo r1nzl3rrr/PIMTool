@@ -1,47 +1,182 @@
 [
   {
     "Group_Id": 1,
-    "Project_Number": 3345,
+    "Project_Number": 8445,
     "Name": "EFV",
-    "Customer": "John Adams",
+    "Customer": "SOMED-SPITEX MAINT",
     "Status": "NEW",
     "Start_Date": "2023-08-01",
     "End_Date": "2023-09-02"
   },
   {
     "Group_Id": 1,
-    "Project_Number": 6573,
+    "Project_Number": 8573,
     "Name": "CXTRANET",
-    "Customer": "Roxane Jones",
+    "Customer": "ABE Corp",
     "Status": "INP",
     "Start_Date": "2022-07-01",
     "End_Date": "2023-01-31"
   },
   {
     "Group_Id": 1,
-    "Project_Number": 2355,
+    "Project_Number": 8655,
     "Name": "CRYSTAL BALL",
-    "Customer": "Francis Kahns",
+    "Customer": "MGB Tourism",
     "Status": "FIN",
     "Start_Date": "2021-02-16",
     "End_Date": "2022-02-27"
   },
   {
     "Group_Id": 2,
-    "Project_Number": 8564,
+    "Project_Number": 8664,
     "Name": "IOC CLIENT EXTRANET",
-    "Customer": "Alex Jones",
+    "Customer": "E Corporation",
     "Status": "PLA",
     "Start_Date": "2020-02-23",
     "End_Date": "2022-01-12"
   },
   {
     "Group_Id": 2,
-    "Project_Number": 3543,
+    "Project_Number": 8693,
     "Name": "KSTA MIGRATION",
-    "Customer": "Lebron James",
+    "Customer": "LIVE Corporation",
     "Status": "INP",
     "Start_Date": "2023-08-12",
     "End_Date": "2023-10-22"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 3116,
+    "Name": "Facturation / Encaissements",
+    "Customer": "Les Retaites Populaires",
+    "Status": "NEW",
+    "Start_Date": "2004-02-25",
+    "End_Date": "2006-11-15"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 3118,
+    "Name": "GKBWEB",
+    "Customer": "GKB",
+    "Status": "FIN",
+    "Start_Date": "2002-10-10",
+    "End_Date": "2004-03-20"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 7157,
+    "Name": "MGBAHN-Maint2015",
+    "Customer": "MGB Tourism",
+    "Status": "INP",
+    "Start_Date": "2006-09-24",
+    "End_Date": "2009-12-10"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 7174,
+    "Name": "SOMED-SPITEX MAINT",
+    "Customer": "SOMED-SPITEX MAINT",
+    "Status": "NEW",
+    "Start_Date": "2015-10-05",
+    "End_Date": "2017-06-30"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 7199,
+    "Name": "ARCHIMEDE-2015-3.14",
+    "Customer": "Les Retaites Populaires",
+    "Status": "PLA",
+    "Start_Date": "2005-05-29",
+    "End_Date": "2006-06-30"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 7553,
+    "Name": "HR System Upgrade",
+    "Customer": "SCP Foundation",
+    "Status": "FIN",
+    "Start_Date": "2008-07-12",
+    "End_Date": "2009-02-28"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 7224,
+    "Name": "Sales Analysis Tool",
+    "Customer": "E Corporation",
+    "Status": "INP",
+    "Start_Date": "2010-03-15",
+    "End_Date": "2011-05-31"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 7251,
+    "Name": "Website Redesign",
+    "Customer": "PRO Industries",
+    "Status": "NEW",
+    "Start_Date": "2020-09-01",
+    "End_Date": "2021-12-31"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 7298,
+    "Name": "Marketing Campaign",
+    "Customer": "Acme Corp",
+    "Status": "PLA",
+    "Start_Date": "2007-01-10",
+    "End_Date": "2007-06-30"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 7312,
+    "Name": "Product Launch",
+    "Customer": "Global Enterprises",
+    "Status": "FIN",
+    "Start_Date": "2012-05-01",
+    "End_Date": "2013-02-28"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 7340,
+    "Name": "Customer Satisfaction Survey",
+    "Customer": "Big Solutions Inc.",
+    "Status": "INP",
+    "Start_Date": "2018-10-15",
+    "End_Date": "2019-04-30"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 7387,
+    "Name": "Inventory Management System",
+    "Customer": "Tech Innovators",
+    "Status": "NEW",
+    "Start_Date": "2019-03-01",
+    "End_Date": "2020-06-30"
+  },
+  {
+    "Group_Id": 1,
+    "Project_Number": 7415,
+    "Name": "E-commerce Platform Development",
+    "Customer": "Fast Retailers",
+    "Status": "PLA",
+    "Start_Date": "2015-06-10",
+    "End_Date": "2016-04-30"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 7452,
+    "Name": "Quality Assurance Audit",
+    "Customer": "Quality Matters Ltd.",
+    "Status": "FIN",
+    "Start_Date": "2014-02-20",
+    "End_Date": "2015-08-31"
+  },
+  {
+    "Group_Id": 2,
+    "Project_Number": 7497,
+    "Name": "Salesforce Integration",
+    "Customer": "Cloud Solutions Co.",
+    "Status": "INP",
+    "Start_Date": "2022-01-05",
+    "End_Date": "2022-09-30"
   }
 ]
