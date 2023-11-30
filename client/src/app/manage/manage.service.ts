@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ManageParams } from './../shared/models/manageParams';
 import { Pagination } from '../shared/models/pagination';
 import { Project } from '../shared/models/project';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class ManageService {
 
   getProject(id: number){
     return this.http.get<Project>(this.baseUrl + 'projects/' + id);
+  }
+
+  deleteProject(id: number){
+    return this.http.delete(this.baseUrl + 'projects?id=' + id);
   }
 }

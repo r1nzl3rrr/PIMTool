@@ -34,14 +34,14 @@
                             <input class="form-check-input" type="checkbox" id="{{ project.id }}">
                         </div>
                     </td>
-                    <td style="text-align: right; width: 5%">{{ project.project_Number }}</td>
+                    <td style="text-align: right; width: 5%"><a routerLink="/manage/{{project.id}}" style="text-decoration: none; color: #666666;">{{ project.project_Number }}</a></td>
                     <td>{{ project.name }}</td>
                     <td>{{ getStatusName(project.status) }}</td>
                     <td>{{ project.customer }}</td>
                     <td>{{ project.start_Date | date: 'dd.MM.yyyy' }}</td>
                     <td>
                         <div class="d-flex justify-content-center" *ngIf="isNew(project.status)">
-                            <i class="fa fa-trash-o" style="size:50px; color:red"></i>
+                            <i class="fa fa-trash-o" style="size:50px; color:red" (click)="onProjectDelete(project.id)"></i>
                         </div>
                     </td>
                 </tr>

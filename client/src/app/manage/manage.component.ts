@@ -78,4 +78,15 @@ export class ManageComponent implements OnInit{
     } 
     this.getProjects();
   }
+
+  onProjectDelete(id: number){
+    this.manageService.deleteProject(id).subscribe({
+      next: () => {
+        this.getProjects();
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+  }
 }
