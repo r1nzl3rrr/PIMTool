@@ -31,30 +31,42 @@
                 <tr>
                     <td>
                         <div class="form-check d-flex justify-content-center">
-                            <input class="form-check-input" type="checkbox" id="{{ project.id }}">
+                            <input class="form-check-input" type="checkbox" id="{{ project.id }}" [checked]="selectedProjectIds.includes(project.id)" (change)="onProjectSelected($event, project.id)">
                         </div>
                     </td>
-                    <td style="text-align: right; width: 5%"><a routerLink="/manage/{{project.id}}" style="text-decoration: none; color: #666666;">{{ project.project_Number }}</a></td>
+                    <td style="text-align: right; width: 5%">
+                        <a routerLink="/manage/{{project.id}}" style="text-decoration: none; color: #666666;">{{ project.project_Number }}</a>
+                    </td>
                     <td>{{ project.name }}</td>
                     <td>{{ getStatusName(project.status) }}</td>
                     <td>{{ project.customer }}</td>
                     <td>{{ project.start_Date | date: 'dd.MM.yyyy' }}</td>
                     <td>
                         <div class="d-flex justify-content-center" *ngIf="isNew(project.status)">
-                            <i class="fa fa-trash-o" style="size:50px; color:red" (click)="onProjectDelete(project.id)"></i>
+                            <i class="fa fa-trash-o" (click)="onProjectDelete(project.id)"></i>
                         </div>
                     </td>
                 </tr>
             </ng-container>
         </tbody>
+        <tfoot *ngIf="selectedProjectIds.length > 0">
+            <tr>
+                <td colspan="3" style="font-size: 18pt; color: #2F85FA">{{selectedProjectIds.length}} items selected</td>
+                <td colspan="4">
+                    <div class="d-flex justify-content-end align-items-center" style="color: red; cursor: pointer" (click)="onProjectsDelete()">
+                        delete selected items <i class="fa fa-trash-o ms-3 me-4"></i>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 
     <div class="d-flex justify-content-end mt-4" *ngIf="totalCount > 0">
         <app-pager
           [totalCount]="totalCount"
           [pageSize]="manageParams.pageSize"
-          (pageChanged)="onPageChanged($event)"
-        ></app-pager>
+          (pageChanged)="onPageChanged($event)">
+        </app-pager>
     </div>
 </div>
 

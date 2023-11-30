@@ -37,11 +37,6 @@ namespace PIMTool.Services
             await _projectRepo.AddAsync(project, cancellationToken);
         }
 
-        public async Task DeleteProject(Project project, CancellationToken cancellationToken)
-        {
-            await _projectRepo.Delete(project, cancellationToken);
-        }
-
         public async Task<IReadOnlyCollection<Employee>> GetEmployeesByProjectId(int id, CancellationToken cancellationToken)
         {
             var employees = await _pimContext.ProjectEmployees
@@ -62,6 +57,14 @@ namespace PIMTool.Services
             await _projectRepo.UpdateAsync(project, cancellationToken);
         }
 
-        
+        public void DeleteProjects(params Project[] projects)
+        {
+            _projectRepo.Delete(projects);
+        }
+
+        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+           await _projectRepo.SaveChangesAsync(cancellationToken);
+        }
     }
 }

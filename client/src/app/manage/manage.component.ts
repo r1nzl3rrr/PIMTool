@@ -16,6 +16,7 @@ export class ManageComponent implements OnInit{
   projects: Project[] = [];
   manageParams = new ManageParams;
   totalCount = 0;
+  selectedProjectIds: number[] = [];
   statusOptions = [
     {name: 'New', value: 'NEW'},
     {name: 'Planned', value: 'PLA'},
@@ -59,6 +60,7 @@ export class ManageComponent implements OnInit{
 
   onStatusSelected(event: any) {
     this.manageParams.statusCode = event.target.value;
+    this.manageParams.pageNumber = 1;
     if(this.selectElement) this.selectElement.nativeElement.style.color ='#333333';
     this.getProjects();
   }
@@ -72,6 +74,7 @@ export class ManageComponent implements OnInit{
   onReset(){
     if(this.searchTerm) this.searchTerm.nativeElement.value = '';
     this.manageParams = new ManageParams();
+    this.selectedProjectIds = [];
     if(this.selectElement){
       this.selectElement.nativeElement.selectedIndex = 0;
       this.selectElement.nativeElement.style.color ='rgba(0,0,0,0.5)';
@@ -79,9 +82,32 @@ export class ManageComponent implements OnInit{
     this.getProjects();
   }
 
+  onProjectSelected(event: any, projectId: number) {
+    if (event.target.checked) {
+      this.selectedProjectIds.push(projectId);
+    } else {
+      const index = this.selectedProjectIds.indexOf(projectId);
+      if (index > -1) {
+        this.selectedProjectIds.splice(index, 1);
+      }
+    }
+  }
+
   onProjectDelete(id: number){
     this.manageService.deleteProject(id).subscribe({
       next: () => {
+        this.getProjects();
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+  }
+
+  onProjectsDelete(){
+    this.manageService.deleteProjects(this.selectedProjectIds.join(',')).subscribe({
+      next: () => {
+        this.selectedProjectIds = [];
         this.getProjects();
       },
       error: error => {

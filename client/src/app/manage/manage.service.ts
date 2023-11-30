@@ -29,6 +29,10 @@ export class ManageService {
   }
 
   deleteProject(id: number){
-    return this.http.delete(this.baseUrl + 'projects?id=' + id);
+    return this.http.delete(this.baseUrl + 'projects?projectIds=' + id);
+  }
+
+  deleteProjects(idsArray: string){
+    return this.http.delete(this.baseUrl + 'projects?projectIds=' + idsArray);
   }
 }

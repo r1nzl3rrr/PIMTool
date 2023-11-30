@@ -92,7 +92,6 @@ td{
     &:first-child{
         padding-left: 8px;
         border-left: 1px solid rgba(0,0,0,0.3);
-        
     }
     &:nth-child(2){
         padding-left: 8px;
@@ -127,6 +126,23 @@ table{
     border: 1px solid rgba(0,0,0,0.3);
 }
 
-i:hover{
+.fa-trash-o{
+    font-size: 25px; 
+    color:red;
     cursor: pointer;
 }
+
+tfoot{
+    & td{
+        padding: 10px 20px;
+        background-color: #f6f9ff;
+    }
+    height: 50px;
+    & td:first-child{
+        border-right: none;
+    }
+    & td:last-child{
+        border-left: none;
+    }
+}
+

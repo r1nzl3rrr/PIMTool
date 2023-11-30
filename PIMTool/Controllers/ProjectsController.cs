@@ -106,15 +106,25 @@ namespace PIMTool.Controllers
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteProject(int id, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteProjects(string projectIds, CancellationToken cancellationToken)
         {
-            var spec = new ProjectSpecification(id);
-            var project = await _projectService.GetProjectWithSpec(spec, cancellationToken);
-            if (project == null)
+            int[] idsArray = projectIds.Split(',').Select(int.Parse).ToArray();
+
+            List<Project> projects = new();
+            foreach (var id in idsArray)
             {
-                return NotFound(new ApiResponse(404));
+                var spec = new ProjectSpecification(id);
+                var project = await _projectService.GetProjectWithSpec(spec, cancellationToken);
+
+                if (project == null) return NotFound(new ApiResponse(404));
+                if (!project.Status.Equals("NEW")) return BadRequest(new ApiResponse(400));
+
+                projects.Add(project);
             }
-            await _projectService.DeleteProject(project, cancellationToken);
+
+            _projectService.DeleteProjects(projects.ToArray());
+            await _projectService.SaveChangesAsync(cancellationToken);
             return Ok(new ApiResponse(200));
         }
 

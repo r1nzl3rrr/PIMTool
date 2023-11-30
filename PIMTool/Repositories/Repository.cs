@@ -46,6 +46,10 @@ namespace PIMTool.Repositories
             await SaveChangesAsync(cancellationToken);
         }
 
+        public void Delete(params T[] entities)
+        {
+            _set.RemoveRange(entities);
+        }
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {

@@ -15,7 +15,10 @@ namespace PIMTool.Core.Interfaces.Services
 
         Task AddProjectAsync(Project project, CancellationToken cancellationToken = default);
 
-        Task DeleteProject(Project project, CancellationToken cancellationToken);
+
+        void DeleteProjects(params Project[] projects);
+
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
 
         Task UpdateProjectAsync(Project project, CancellationToken cancellationToken = default);
     }
