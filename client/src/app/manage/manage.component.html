@@ -3,7 +3,7 @@
 
     <div class="d-flex mt-3 mb-4">
         <input type="text" (keyup.enter)="onSearch()" placeholder="Project number, name, customer name" class="form-control mt-2 me-3" #search/>
-        <select class="form-select mt-2 me-2 mb-4" (change)="onStatusSelected($event)" #select>
+        <select class="form-select mt-2 me-2 mb-4" (change)="onStatusSelected($event)" (focus)="onStatusFocus()" #select>
             <option value="" disabled selected hidden>Project status </option>
             <option *ngFor="let status of statusOptions" [value]="status.value">
                 {{ status.name }}
@@ -65,6 +65,7 @@
         <app-pager
           [totalCount]="totalCount"
           [pageSize]="manageParams.pageSize"
+          [pageNumber]="manageParams.pageNumber"
           (pageChanged)="onPageChanged($event)">
         </app-pager>
     </div>

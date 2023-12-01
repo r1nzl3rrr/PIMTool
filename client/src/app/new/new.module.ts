@@ -4,6 +4,7 @@ import { ProjectComponent } from './project/project.component';
 import { NewRoutingModule } from './new-routing.module';
 import { CustomerComponent } from './customer/customer.component';
 import { SupplierComponent } from './supplier/supplier.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -15,7 +16,8 @@ import { SupplierComponent } from './supplier/supplier.component';
   ],
   imports: [
     CommonModule,
-    NewRoutingModule
+    NewRoutingModule,
+    SharedModule
   ]
 })
 export class NewModule { }

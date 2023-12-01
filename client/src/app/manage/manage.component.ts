@@ -65,6 +65,10 @@ export class ManageComponent implements OnInit{
     this.getProjects();
   }
 
+  onStatusFocus(){
+    if(this.selectElement) this.selectElement.nativeElement.style.color ='#333333';
+  }
+
   onSearch() {
     this.manageParams.search = this.searchTerm?.nativeElement.value;
     this.manageParams.pageNumber = 1;

@@ -25,6 +25,7 @@ export class ManageService {
   }
 
   getProject(id: number){
+    this.http.put
     return this.http.get<Project>(this.baseUrl + 'projects/' + id);
   }
 
