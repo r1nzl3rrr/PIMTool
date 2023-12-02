@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ManageParams } from './../shared/models/manageParams';
 import { Pagination } from '../shared/models/pagination';
 import { Project } from '../shared/models/project';
@@ -24,7 +24,6 @@ export class ManageService {
   }
 
   getProject(id: number){
-    this.http.put
     return this.http.get<Project>(this.baseUrl + 'projects/' + id);
   }
 

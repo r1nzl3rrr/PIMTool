@@ -42,6 +42,10 @@ namespace PIMTool.Services
         {
             return await _groupRepo.CountAsync(spec, cancellationToken);
         }
-        
+
+        public async Task<IReadOnlyCollection<Group>> GetAllGroupsAsync(CancellationToken cancellationToken)
+        {
+            return await _groupRepo.GetAsync();
+        }
     }
 }

@@ -52,6 +52,14 @@ namespace PIMTool.Controllers
             return _mapper.Map<Employee, EmployeeDto>(employee);
         }
 
+        [HttpGet("all")]
+        public async Task<ActionResult<IReadOnlyCollection<EmployeeDto>>> GetAllGroupsAsync(CancellationToken cancellationToken)
+        {
+            var employees = await _employeeService.GetAllEmployeesAsync(cancellationToken);
+            return Ok(_mapper.Map<IReadOnlyCollection<Employee>, IReadOnlyCollection<EmployeeDto>>(employees));    
+        }
+
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AddEmployee([FromBody] AddingAndUpdatingEmployeeDto employee, CancellationToken cancellationToken)

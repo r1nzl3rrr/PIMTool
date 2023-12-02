@@ -38,6 +38,13 @@ namespace PIMTool.Controllers
             return Ok(new Pagination<GroupDto>(groupParams.PageIndex, groupParams.PageSize, totalItems, data));
         }
 
+        [HttpGet("all")]
+        public async Task<ActionResult<IReadOnlyCollection<GroupWithoutProjectsDto>>> GetAllGroupsAsync(CancellationToken cancellationToken)
+        {
+            var groups = await _groupService.GetAllGroupsAsync(cancellationToken);
+            return Ok(_mapper.Map<IReadOnlyCollection<Group>, IReadOnlyCollection<GroupWithoutProjectsDto>>(groups));    
+        }
+
         [HttpGet("with-projects/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]

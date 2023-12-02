@@ -1,7 +1,4 @@
-﻿using PIMTool.Core.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace PIMTool.Dtos
+﻿namespace PIMTool.Dtos
 {
     public class EmployeeDto
     {

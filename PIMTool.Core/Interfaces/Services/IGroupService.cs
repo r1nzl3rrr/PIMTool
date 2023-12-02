@@ -5,6 +5,7 @@ namespace PIMTool.Core.Interfaces.Services
 {
     public interface IGroupService
     {
+        Task<IReadOnlyCollection<Group>> GetAllGroupsAsync(CancellationToken cancellationToken);
         Task<IReadOnlyCollection<Group>> GetGroupsAsyncWithSpec(ISpecification<Group> spec, CancellationToken cancellationToken);
 
         Task<Group?> GetGroupWithSpec(ISpecification<Group> spec, CancellationToken cancellationToken);

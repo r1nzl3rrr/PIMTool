@@ -31,6 +31,11 @@ namespace PIMTool.Services
             await _employeeRepo.Delete(employee, cancellationToken);
         }
 
+        public async Task<IReadOnlyCollection<Employee>> GetAllEmployeesAsync(CancellationToken cancellationToken)
+        {
+            return await _employeeRepo.GetAsync();
+        }
+
         public async Task<Employee?> GetEmployeeIdAsync(int id, CancellationToken cancellationToken = default)
         {
            return await _employeeRepo.GetIdAsync(id, cancellationToken);

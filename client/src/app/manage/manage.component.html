@@ -7,7 +7,7 @@
             <option value="" disabled selected hidden>Project status </option>
             <option *ngFor="let status of statusOptions" [value]="status.value">
                 {{ status.name }}
-              </option>
+            </option>
         </select>
 
         <button class="btn btn-primary bg-gradient ms-5 me-3 mt-1 search-button d-flex align-items-center justify-content-center" (click)="onSearch()">Search Project</button>

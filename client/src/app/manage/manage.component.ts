@@ -22,7 +22,7 @@ export class ManageComponent implements OnInit{
     {name: 'Planned', value: 'PLA'},
     {name: 'In progress', value: 'INP'},
     {name: 'Finished', value: 'FIN'},
-  ]
+  ];
 
   constructor(private manageService: ManageService) {}
 

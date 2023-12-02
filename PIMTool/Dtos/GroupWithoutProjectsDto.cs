@@ -5,6 +5,5 @@
         public int Id { get; set; }
 
         public int Group_Leader_Id { get; set; }
-        public string Leader { get; set; }
     }
 }
