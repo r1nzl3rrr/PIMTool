@@ -25,6 +25,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     BsDatepickerModule,
     PagerComponent,
     ReactiveFormsModule
-  ]
+  ],
 })
 export class SharedModule { }

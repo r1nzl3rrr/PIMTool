@@ -10,13 +10,19 @@
     margin-bottom: 40px;
 }
 
-form{
+.create-form{
     margin-top: 60px;
     margin-left: 4%;
 }
 
+
+
 form div{
     margin-bottom: 38px;
+}
+
+form .create{
+    margin-bottom: 45px;
 }
 
 .pNum input{
@@ -65,16 +71,12 @@ form .datepicker{
     margin-left: 13%;
 }
 
-.buttons{
-    width: 75%;
-}
-
 .create-button{
     height: 35px;
     font-size: 14pt;
     font-weight: 600;
     background-color: #2F85FA;
-    width: 17%;
+    width: 22%;
     margin-left: 60px;
 }
 
@@ -83,5 +85,5 @@ form .datepicker{
     font-size: 14pt;
     font-weight: 600;
     background-color: #B9B9B9;
-    width: 17%;
+    width: 22%;
 }
