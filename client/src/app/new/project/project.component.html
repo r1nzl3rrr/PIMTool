@@ -4,8 +4,13 @@
         <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
             <div class="border-bottom create">
                 <div class="create-form">
+                    <app-text-input
+                        [formControl]="createForm.controls['project_Number']"
+                        [type]="'number'"
+                        [label]="'Project Number'"
+                    ></app-text-input>
                     <div class="d-flex align-items-center pNum">
-                        <label for="projectNumber">Project Number</label>[value]="group.id"
+                        <label for="projectNumber">Project Number</label>
                         <input type="number" class="form-control" formControlName="project_Number" id="projectNumber">
                     </div>
                     <div class="d-flex align-items-center">
@@ -40,9 +45,15 @@
                     </div>
                     <div class="d-flex align-items-center datepicker">
                         <label for="startDate">Start date</label>
-                        <input type="text" id="startDate" class="form-control" formControlName="start_Date" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" bsDatepicker>
+                        <input type="text" id="startDate" class="form-control" formControlName="start_Date" 
+                        [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" 
+                        placement="top"
+                        bsDatepicker>
                         <label for="endDate" class="end-date">End date</label>
-                        <input type="text" id="endDate" class="form-control" formControlName="end_Date" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" bsDatepicker>
+                        <input type="text" id="endDate" class="form-control" formControlName="end_Date" 
+                        [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" 
+                        placement="top"
+                        bsDatepicker>
                     </div>
                 </div>
             </div>
