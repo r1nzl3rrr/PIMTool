@@ -78,7 +78,7 @@ namespace PIMTool.Controllers
         {
             var spec = new ProjectSpecification(id);
             var updatingProject = await _projectService.GetProjectWithSpec(spec, cancellationToken);
-
+            
             if (updatingProject == null)
             {
                 return NotFound(new ApiResponse(404));
@@ -118,7 +118,9 @@ namespace PIMTool.Controllers
                 var project = await _projectService.GetProjectWithSpec(spec, cancellationToken);
 
                 if (project == null) return NotFound(new ApiResponse(404));
-                if (!project.Status.Equals("NEW")) return BadRequest(new ApiResponse(400));
+                if (!project.Status.Equals("NEW")) return new BadRequestObjectResult(
+                    new ApiValidationErrorResponse{Errors = new[]{"Delete projects with status 'New' only"}}
+                    );
 
                 projects.Add(project);
             }

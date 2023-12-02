@@ -12,6 +12,7 @@ import { ManageService } from './manage.service';
 export class ManageComponent implements OnInit{
   @ViewChild('select') selectElement?: ElementRef;
   @ViewChild('search') searchTerm?: ElementRef;
+  validationErrors: string[] = [];
 
   projects: Project[] = [];
   manageParams = new ManageParams;
@@ -79,6 +80,7 @@ export class ManageComponent implements OnInit{
     if(this.searchTerm) this.searchTerm.nativeElement.value = '';
     this.manageParams = new ManageParams();
     this.selectedProjectIds = [];
+    this.validationErrors = [];
     if(this.selectElement){
       this.selectElement.nativeElement.selectedIndex = 0;
       this.selectElement.nativeElement.style.color ='rgba(0,0,0,0.5)';
@@ -101,6 +103,7 @@ export class ManageComponent implements OnInit{
     this.manageService.deleteProject(id).subscribe({
       next: () => {
         this.getProjects();
+        this.validationErrors = [];
       },
       error: error => {
         console.log(error);
@@ -112,10 +115,12 @@ export class ManageComponent implements OnInit{
     this.manageService.deleteProjects(this.selectedProjectIds.join(',')).subscribe({
       next: () => {
         this.selectedProjectIds = [];
+        this.validationErrors = [];
         this.getProjects();
       },
       error: error => {
         console.log(error);
+        this.validationErrors = error.errors;
       }
     });
   }
