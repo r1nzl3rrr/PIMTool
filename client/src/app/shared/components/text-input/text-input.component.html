@@ -4,7 +4,7 @@
         type={{type}}
         [formControl]="control" 
         class="form-control" 
-        [ngClass]="(control.touched) ? control.invalid ? 'is-invalid' : 'is-valid' : null" 
+        [ngClass]="(control.touched) ? control.invalid ? 'is-invalid' : null : null" 
         >
     <div *ngIf="control.errors?.['required']" class="invalid-feedback">Please enter {{label}}</div>
 </div>

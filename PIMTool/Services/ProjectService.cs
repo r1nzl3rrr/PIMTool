@@ -66,5 +66,10 @@ namespace PIMTool.Services
         {
            await _projectRepo.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task<Project?> FindByNumberAsync(int number)
+        {
+            return await _pimContext.Set<Project>().FirstOrDefaultAsync(x => x.Project_Number == number);
+        }
     }
 }

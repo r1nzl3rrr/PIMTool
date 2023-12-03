@@ -5,28 +5,21 @@
     color: #666666;
 }
 
-.project-form{
-    width: 75%;
-    margin-bottom: 40px;
-}
-
 .create-form{
     margin-top: 60px;
     margin-left: 4%;
 }
 
-
-
 form div{
     margin-bottom: 38px;
 }
 
-form .create{
-    margin-bottom: 45px;
+.border-bottom{
+    width: 75%;
 }
 
 .pNum input{
-    width: 25%;
+    width: 20%;
     height: 30px;
 }
 
@@ -37,7 +30,7 @@ input{
 }
 
 label{
-    width: 25%;
+    width: 19%;
     font-weight: 600;
     font-size: 14pt;
     color: #666666;
@@ -45,7 +38,7 @@ label{
 
 select{
     height: 35px;
-    width: 25%;
+    width: 20%;
     padding: 3px 20px;
     font-size: 14pt;
     color: #666666;
@@ -54,7 +47,7 @@ select{
 }
 
 .datepicker input{
-    width: 25%;
+    width: 20%;
     background-image: url('../../../assets/images/icons8-calendar-50.png');
     background-repeat: no-repeat;
     background-size: 20px 20px;
@@ -67,8 +60,12 @@ form .datepicker{
 }
 
 .end-date{
-    width: 12%;
-    margin-left: 13%;
+    width: 10%;
+    margin-left: 5%;
+}
+
+.buttons{
+    width: 75%;
 }
 
 .create-button{

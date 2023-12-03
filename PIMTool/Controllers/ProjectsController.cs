@@ -52,6 +52,11 @@ namespace PIMTool.Controllers
             return _mapper.Map<Project, ProjectDto>(project);
         }
 
+        [HttpGet("numberexists")]
+        public async Task<ActionResult<bool>> CheckProjectNumberExistsAsync([FromQuery] int number){
+            return await _projectService.FindByNumberAsync(number) != null;
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProject(AddingAndUpdatingProjectDto project, CancellationToken cancellationToken)
@@ -76,6 +81,13 @@ namespace PIMTool.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateProject(int id, AddingAndUpdatingProjectDto project, CancellationToken cancellationToken)
         {
+            if(CheckProjectNumberExistsAsync(project.Project_Number).Result.Value) {
+                return new BadRequestObjectResult(
+                    new ApiValidationErrorResponse{Errors = new[]
+                        {"The project number already existed. Please select a different project number"}
+                    }
+                );
+            }
             var spec = new ProjectSpecification(id);
             var updatingProject = await _projectService.GetProjectWithSpec(spec, cancellationToken);
             
