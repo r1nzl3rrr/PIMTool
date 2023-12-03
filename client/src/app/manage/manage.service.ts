@@ -3,12 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ManageParams } from './../shared/models/manageParams';
 import { Pagination } from '../shared/models/pagination';
 import { Project } from '../shared/models/project';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManageService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

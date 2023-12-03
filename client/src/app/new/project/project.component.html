@@ -11,6 +11,7 @@
                     [class.is-invalid]="createForm.get('project_Number')?.touched && createForm.get('project_Number')?.invalid"
                     type="number" class="form-control" formControlName="project_Number" id="projectNumber">
                 <div *ngIf="createForm.get('project_Number')?.errors?.['required']" class="invalid-feedback">Please enter Project Number</div>
+                <div *ngIf="createForm.get('project_Number')?.errors?.['numberExists']" class="invalid-feedback">The project number already existed. Please select a different project number</div>
             </div>
 
             <app-text-input [formControl]="createForm.controls['name']" [type]="'text'" [label]="'Name'"></app-text-input>
@@ -20,14 +21,14 @@
             <div class="d-flex align-items-center group">
                 <label for="group">Group</label>
                 <select 
-                    [class.is-invalid]="createForm.get('group')?.touched && createForm.get('group')?.invalid"
-                    class="form-select form-control" formControlName="group" id="group" required>
+                    [class.is-invalid]="createForm.get('group_Id')?.touched && createForm.get('group_Id')?.invalid"
+                    class="form-select form-control" formControlName="group_Id" id="group" required>
                     <option value="0" disabled hidden selected>New</option>
                     <option *ngFor="let group of groups" [value]="group.id">
                         Group {{ group.id }}
                     </option>
                 </select>
-                <div *ngIf="createForm.get('group')?.errors?.['min']" class="invalid-feedback">Please select a Group</div>
+                <div *ngIf="createForm.get('group_Id')?.errors?.['min']" class="invalid-feedback">Please select a Group</div>
             </div>
 
             <app-text-input [formControl]="createForm.controls['members']" [type]="'text'" [label]="'Members'"></app-text-input>
@@ -58,8 +59,9 @@
                 placement="top"
                 bsDatepicker>
 
-                <div *ngIf="createForm.get('start_Date')?.errors?.['required'] || 
-                createForm.get('start_Date')?.errors?.['required']" class="invalid-feedback">Please enter a Date</div>
+                <div *ngIf="createForm.get('start_Date')?.invalid || 
+                createForm.get('end_Date')?.invalid"
+                class="invalid-feedback">Please enter a valid Date</div>
             </div>
         </div>
         <div class="border-bottom"></div>

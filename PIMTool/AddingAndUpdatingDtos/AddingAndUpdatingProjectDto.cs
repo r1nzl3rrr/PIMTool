@@ -6,10 +6,8 @@ namespace PIMTool.AddingAndUpdatingDtos
     public class AddingAndUpdatingProjectDto
     {
         [Required]
-        [Range(1, double.MaxValue)]
         public int Group_Id { get; set; }
         [Required]
-        [Range(1, double.MaxValue)]
         public int Project_Number { get; set; }
         [Required]
         public string Name { get; set; } = null!;
