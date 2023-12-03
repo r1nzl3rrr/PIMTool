@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PIMTool.AddingAndUpdatingDtos;
+using PIMTool.Config;
 using PIMTool.Core.Domain.Entities;
 using PIMTool.Core.Interfaces.Services;
 using PIMTool.Core.Specifications;
@@ -61,6 +62,14 @@ namespace PIMTool.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProject(AddingAndUpdatingProjectDto project, CancellationToken cancellationToken)
         {
+            if(project.Project_Number >= 10000){
+                return new BadRequestObjectResult(
+                    new ApiValidationErrorResponse{Errors = new[]
+                        {"Project number must be less than 4 digits"}
+                    }
+                );
+            }
+
             if(CheckProjectNumberExistsAsync(project.Project_Number).Result.Value) {
                 return new BadRequestObjectResult(
                     new ApiValidationErrorResponse{Errors = new[]

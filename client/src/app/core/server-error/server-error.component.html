@@ -1,1 +1,18 @@
-<p>server-error works!</p>
+<div class="server-error">
+    <div class="d-flex align-items-center general">
+        <div>
+            <img src="../../../assets/images/Flat_cross_icon.svg">
+        </div>
+        <div class="error-text">
+            <p>Unexpected error occured.</p>
+            <p>Please <span>contact your adminstrator</span></p>
+            <p>or <span routerLink="/manage">back to search project</span></p>
+        </div>
+    </div>
+    <ng-container *ngIf="error">
+        <h5 class="text-danger message">Error: {{error.message}}</h5>
+        <p class="font-weight-bold">This is an iternal server error</p>
+        <h5>Stack-trace</h5>
+        <code class="mt-5" style="background-color: whitesmoke;">{{error.details}}</code>
+    </ng-container>
+</div>

@@ -29,7 +29,7 @@ export class ProjectComponent implements OnInit{
   ];
 
   createForm = new FormGroup({
-    project_Number: new FormControl('', Validators.required, [this.validateNumberNotExisted()]),
+    project_Number: new FormControl('', [Validators.required, Validators.max(9999)], [this.validateNumberNotExisted()]),
     name: new FormControl('', Validators.required),
     customer: new FormControl('', Validators.required),
     members: new FormControl(''),
@@ -50,8 +50,6 @@ export class ProjectComponent implements OnInit{
       this.showAlert = true;
       return;
     }
-
-    
 
     let createFormObj = this.createForm.value;
     createFormObj.start_Date = this.datePipe.transform(createFormObj.start_Date, 'yyyy-MM-dd');

@@ -2,10 +2,10 @@
   <app-header></app-header>
   <div class="container-fluid" style="max-width: 91%;">
     <div class="row">
-      <section class="col-2 d-flex justify-content-end border-end">
+      <section class="col-2 d-flex justify-content-end border-end" *ngIf="!isServerError()">
         <app-nav-bar></app-nav-bar>
       </section>
-      <section class="col-10">
+      <section [ngClass]="{'col-10': !isServerError(), 'col-12': isServerError()}">
         <router-outlet></router-outlet>
       </section>
     </div>

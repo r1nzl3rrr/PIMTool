@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
+
 @NgModule({
   declarations: [
     AppComponent,
