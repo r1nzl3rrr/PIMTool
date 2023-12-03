@@ -5,7 +5,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TextInputComponent } from './components/text-input/text-input.component';
-
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 
 
@@ -18,16 +18,18 @@ import { TextInputComponent } from './components/text-input/text-input.component
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
-    BsDatepickerModule.forRoot(),
+    BsDatepickerModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AlertModule
   ],
   exports: [
     PaginationModule,
     BsDatepickerModule,
     PagerComponent,
     ReactiveFormsModule,
-    TextInputComponent
+    TextInputComponent,
+    AlertModule
   ],
 })
 export class SharedModule { }

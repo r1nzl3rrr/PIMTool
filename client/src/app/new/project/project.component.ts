@@ -14,6 +14,7 @@ export class ProjectComponent implements OnInit{
 
   groups: Group[] = [];
   employees: Employee[] = [];
+  showAlert: boolean = false;
 
   statusOptions = [
     {name: 'New', value: 'NEW'},
@@ -27,7 +28,7 @@ export class ProjectComponent implements OnInit{
     name: new FormControl('', Validators.required),
     customer: new FormControl('', Validators.required),
     members: new FormControl(''),
-    group: new FormControl(0, Validators.required),
+    group: new FormControl(0, Validators.min(1)),
     status: new FormControl('NEW', Validators.required),
     start_Date: new FormControl('', Validators.required),
     end_Date: new FormControl('', Validators.required),
@@ -47,7 +48,10 @@ export class ProjectComponent implements OnInit{
     createFormObj.group = Number(createFormObj.group)
     delete createFormObj.members;
     console.log(createFormObj);
-    this.createForm.reset();
+    if (this.createForm.invalid) {
+      this.createForm.markAllAsTouched();
+      this.showAlert = true;
+    }
     this.createForm.patchValue({ status: 'NEW', group: 0 });
   }
 
@@ -58,6 +62,10 @@ export class ProjectComponent implements OnInit{
       },
       error: error => console.log(error)
     })
+  }
+
+  dismissAlert(){
+    this.showAlert = false;
   }
 
   getEmployees(){

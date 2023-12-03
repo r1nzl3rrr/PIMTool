@@ -18,7 +18,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     NewRoutingModule,
     DatePipe,
-    SharedModule
+    SharedModule,
   ],
   providers: [DatePipe]
 })
