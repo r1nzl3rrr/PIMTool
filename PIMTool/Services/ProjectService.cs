@@ -79,5 +79,12 @@ namespace PIMTool.Services
         {
             return await _pimContext.Set<Project>().MaxAsync(p => p.Id);
         }
+
+        public async Task RemoveMemberAsync(int id)
+        {
+            var entriesToRemove = await _pimContext.Set<ProjectEmployee>().Where(p => p.Project_Id == id).ToListAsync();
+            _pimContext.Set<ProjectEmployee>().RemoveRange(entriesToRemove);
+            await SaveChangesAsync();
+        }
     }
 }

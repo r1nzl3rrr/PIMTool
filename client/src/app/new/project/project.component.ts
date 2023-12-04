@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Group } from 'src/app/shared/models/group';
-import { Employee } from 'src/app/shared/models/employee';
 import { NewService } from './../new.service';
 import { Router } from '@angular/router';
 import { Observable, debounceTime, finalize, map, switchMap, take } from 'rxjs';

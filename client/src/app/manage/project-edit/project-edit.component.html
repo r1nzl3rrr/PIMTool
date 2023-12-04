@@ -1,1 +1,83 @@
-<p>project-edit works!</p>
+<div class="ms-5 mt-5 mb-5">
+    <div class="border-bottom pb-3 title">Edit Project Information</div>
+    <div class="alert" *ngIf="showAlert">
+        <alert type="danger" [dismissible]="true" (onClosed)="dismissAlert()" ><span style="color: #be615f;">Please enter all the mandatory fields (*)</span></alert>
+    </div>
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+        <div class="create-form">
+            <div class="d-flex align-items-center pNum">
+                <label for="projectNumber">Project Number <span> *</span></label>
+                <input 
+                    (keydown.enter)="onEnterKey($event)"
+                    [class.is-invalid]="updateForm.get('project_Number')?.touched && updateForm.get('project_Number')?.invalid"
+                    type="number" class="form-control" formControlName="project_Number" id="projectNumber">
+                <div *ngIf="updateForm.get('project_Number')?.errors?.['required']" class="invalid-feedback">Please enter Project Number</div>
+                <div *ngIf="updateForm.get('project_Number')?.errors?.['numberExists']" class="invalid-feedback">The project number already existed. Please select a different project number</div>
+                <div *ngIf="updateForm.get('project_Number')?.errors?.['max']" class="invalid-feedback">Project number must be less than 4 digits</div>
+            </div>
+
+            <app-text-input [formControl]="updateForm.controls['name']" [type]="'text'" [label]="'Name'"></app-text-input>
+
+            <app-text-input [formControl]="updateForm.controls['customer']" [type]="'text'" [label]="'Customer'"></app-text-input>
+
+            <div class="d-flex align-items-center group">
+                <label for="group">Group <span> *</span></label>
+                <select 
+                    [class.is-invalid]="updateForm.get('group_Id')?.touched && updateForm.get('group_Id')?.invalid"
+                    class="form-select form-control" formControlName="group_Id" id="group" required>
+                    <option *ngFor="let group of groups" [value]="group.id">
+                        Group {{ group.id }}
+                    </option>
+                </select>
+                <div *ngIf="updateForm.get('group_Id')?.errors?.['min']" class="invalid-feedback">Please select a Group</div>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <label>Members</label>
+                <tag-input class="form-control" [ngModel]="members" formControlName="members"
+                        [onlyFromAutocomplete]="true">
+                    <tag-input-dropdown [showDropdownIfEmpty]="true"
+                        [autocompleteObservable]='requestAutocompleteItems'>
+                    </tag-input-dropdown>
+                </tag-input>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <label for="status">Status <span> *</span></label>
+                <select class="form-select form-control" formControlName="status" id="status">
+                    <option *ngFor="let status of statusOptions" [value]="status.value">
+                        {{ status.name }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="d-flex align-items-center datepicker">
+                <label for="startDate">Start date <span> *</span></label>
+                <input 
+                [class.is-invalid]="updateForm.get('start_Date')?.touched && updateForm.get('start_Date')?.invalid"
+                type="text" id="startDate" class="form-control" formControlName="start_Date" 
+                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" 
+                placement="top"
+                bsDatepicker>
+
+                <label for="endDate" class="end-date">End date <span> *</span></label>
+                <input 
+                [class.is-invalid]="updateForm.get('end_Date')?.touched && updateForm.get('end_Date')?.invalid"
+                type="text" id="endDate" class="form-control" formControlName="end_Date" 
+                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" 
+                placement="top"
+                bsDatepicker>
+
+                <div *ngIf="updateForm.get('start_Date')?.invalid || 
+                updateForm.get('end_Date')?.invalid"
+                class="invalid-feedback">Please enter a valid Date</div>
+            </div>
+        </div>
+        <div class="border-bottom"></div>
+        <div class="d-flex buttons justify-content-end">
+            <button class="btn btn-light bg-gradient cancel-button d-flex align-items-center justify-content-center" (click)="onCancel()">Cancel</button>
+            <button class="btn btn-primary bg-gradient update-button d-flex align-items-center justify-content-center" type="submit" >Update Project</button>
+        </div>
+    </form>
+    
+</div>

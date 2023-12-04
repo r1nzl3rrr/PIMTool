@@ -60,11 +60,36 @@ namespace PIMTool.Controllers
 
         [HttpPost("addmembers")]
         public async Task<ActionResult> AddMembers(int[] memIds){
+            if(memIds == null || !memIds.Any()){
+                return Ok(new ApiResponse(200));
+            }
             int newProjectId = await _projectService.GetMaxProjectIdAsync();
             
             ProjectEmployee[] projectEmployees = memIds.Select(memId => new ProjectEmployee
             {
-                Project_Id = newProjectId, // Increment the largest project ID by 1
+                Project_Id = newProjectId,
+                Employee_Id = memId
+            }).ToArray();
+
+            await _projectService.AddMembersAsync(projectEmployees);
+
+            return Ok(new ApiResponse(200));
+        }
+
+        [HttpPost("updatemembers/{id}")]
+        public async Task<ActionResult> UpdateMembers(int id, int[] memIds){
+            if(memIds == null || !memIds.Any()){
+               await _projectService.RemoveMemberAsync(id);
+               return Ok(new ApiResponse(200));
+            }
+            
+            await _projectService.RemoveMemberAsync(id);
+
+            int newProjectId = await _projectService.GetMaxProjectIdAsync();
+            
+            ProjectEmployee[] projectEmployees = memIds.Select(memId => new ProjectEmployee
+            {
+                Project_Id = newProjectId,
                 Employee_Id = memId
             }).ToArray();
 
@@ -122,7 +147,6 @@ namespace PIMTool.Controllers
             }
 
             updatingProject.Group_Id = project.Group_Id;
-            updatingProject.Project_Number = project.Project_Number;
             updatingProject.Name = project.Name;
             updatingProject.Customer = project.Customer;
             updatingProject.Status = project.Status;
@@ -133,7 +157,7 @@ namespace PIMTool.Controllers
             return Ok(new ApiResponse(200));
         }
 
-        [HttpGet("get-employees/{id}")]
+        [HttpGet("getemployees/{id}")]
         public async Task<ActionResult<IReadOnlyCollection<EmployeeDto>>> GetEmployees(int id, CancellationToken cancellationToken)
         {
             var employees = await _projectService.GetEmployeesByProjectId(id, cancellationToken);
