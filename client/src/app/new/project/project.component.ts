@@ -47,6 +47,10 @@ export class ProjectComponent implements OnInit{
     }
     this.createForm.valueChanges
       .subscribe(value => localStorage.setItem("DRAFT_1", JSON.stringify(value)));
+
+    window.addEventListener("beforeunload", () => {
+      localStorage.clear();
+    });
   }
 
   onCancel(){
