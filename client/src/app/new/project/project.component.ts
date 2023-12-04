@@ -17,7 +17,6 @@ export class ProjectComponent implements OnInit{
   groups: Group[] = [];
   employees: Employee[] = [];
   showAlert = false;
-  errors: string[] = [];
 
   constructor(private newService: NewService, private datePipe: DatePipe, private router: Router){}
 
@@ -42,6 +41,16 @@ export class ProjectComponent implements OnInit{
   ngOnInit(): void {
     this.getGroups();
     this.getEmployees();
+    const draft = localStorage.getItem("DRAFT_1");
+    if(draft){
+      this.createForm.setValue(JSON.parse(draft));
+    }
+    this.createForm.valueChanges
+      .subscribe(value => localStorage.setItem("DRAFT_1", JSON.stringify(value)));
+  }
+
+  onCancel(){
+    this.router.navigateByUrl('/manage');
   }
 
   onSubmit(){
@@ -62,9 +71,13 @@ export class ProjectComponent implements OnInit{
     delete createFormObj.members;
     
     this.newService.createProject(createFormObj).subscribe({
-      next: () => this.router.navigateByUrl('/manage'),
-      error: error => {console.log(error);
-      this.errors = error.errors;}
+      next: () => {
+        localStorage.clear();
+        this.router.navigateByUrl('/manage')
+      },
+      error: error => {
+        console.log(error);
+      }
     })
   }
 
