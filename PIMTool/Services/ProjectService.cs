@@ -5,9 +5,6 @@ using PIMTool.Core.Interfaces.Repositories;
 using PIMTool.Core.Interfaces.Services;
 using PIMTool.Core.Specifications;
 using PIMTool.Database;
-using PIMTool.Dtos;
-using PIMTool.Repositories;
-using PIMTool.SpecificationEvaluator;
 
 namespace PIMTool.Services
 {
@@ -70,6 +67,17 @@ namespace PIMTool.Services
         public async Task<Project?> FindByNumberAsync(int number)
         {
             return await _pimContext.Set<Project>().FirstOrDefaultAsync(x => x.Project_Number == number);
+        }
+
+        public async Task AddMembersAsync(ProjectEmployee[] projectEmployee)
+        {
+           await _pimContext.Set<ProjectEmployee>().AddRangeAsync(projectEmployee);
+           await SaveChangesAsync(); 
+        }
+
+        public async Task<int> GetMaxProjectIdAsync()
+        {
+            return await _pimContext.Set<Project>().MaxAsync(p => p.Id);
         }
     }
 }

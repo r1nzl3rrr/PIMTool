@@ -58,6 +58,21 @@ namespace PIMTool.Controllers
             return await _projectService.FindByNumberAsync(number) != null;
         }
 
+        [HttpPost("addmembers")]
+        public async Task<ActionResult> AddMembers(int[] memIds){
+            int newProjectId = await _projectService.GetMaxProjectIdAsync();
+            
+            ProjectEmployee[] projectEmployees = memIds.Select(memId => new ProjectEmployee
+            {
+                Project_Id = newProjectId, // Increment the largest project ID by 1
+                Employee_Id = memId
+            }).ToArray();
+
+            await _projectService.AddMembersAsync(projectEmployees);
+
+            return Ok(new ApiResponse(200));
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProject(AddingAndUpdatingProjectDto project, CancellationToken cancellationToken)

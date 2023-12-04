@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { TagInputModule } from 'ngx-chips';
 
 
 
@@ -21,6 +22,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     BsDatepickerModule,
     ReactiveFormsModule,
     FormsModule,
+    TagInputModule,
     AlertModule
   ],
   exports: [
@@ -29,7 +31,8 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     PagerComponent,
     ReactiveFormsModule,
     TextInputComponent,
-    AlertModule
+    AlertModule,
+    TagInputModule
   ],
 })
 export class SharedModule { }

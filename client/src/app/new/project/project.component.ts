@@ -5,7 +5,7 @@ import { Group } from 'src/app/shared/models/group';
 import { Employee } from 'src/app/shared/models/employee';
 import { NewService } from './../new.service';
 import { Router } from '@angular/router';
-import { debounceTime, finalize, map, switchMap, take } from 'rxjs';
+import { Observable, debounceTime, finalize, map, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-project',
@@ -15,8 +15,8 @@ import { debounceTime, finalize, map, switchMap, take } from 'rxjs';
 export class ProjectComponent implements OnInit{
 
   groups: Group[] = [];
-  employees: Employee[] = [];
   showAlert = false;
+  memberIds: number[] = [];
 
   constructor(private newService: NewService, private datePipe: DatePipe, private router: Router){}
 
@@ -40,14 +40,14 @@ export class ProjectComponent implements OnInit{
 
   ngOnInit(): void {
     this.getGroups();
-    this.getEmployees();
+    // Saving draft to localStorage
     const draft = localStorage.getItem("DRAFT_1");
     if(draft){
       this.createForm.setValue(JSON.parse(draft));
     }
     this.createForm.valueChanges
       .subscribe(value => localStorage.setItem("DRAFT_1", JSON.stringify(value)));
-
+    // Clear the localStorage when exiting application
     window.addEventListener("beforeunload", () => {
       localStorage.clear();
     });
@@ -67,20 +67,42 @@ export class ProjectComponent implements OnInit{
     let createFormObj = this.createForm.value;
     createFormObj.start_Date = this.datePipe.transform(createFormObj.start_Date, 'yyyy-MM-dd');
     createFormObj.end_Date = this.datePipe.transform(createFormObj.end_Date, 'yyyy-MM-dd');
+
     if (createFormObj.start_Date != null && createFormObj.end_Date != null && new Date(createFormObj.end_Date) < new Date(createFormObj.start_Date)) {
       this.createForm.controls['end_Date'].setErrors({ 'isInvalid': true });
       return;
     }
+
     createFormObj.group_Id = Number(createFormObj.group_Id)
     delete createFormObj.members;
-    
-    this.newService.createProject(createFormObj).subscribe({
+    this.getMemberIds();
+    this.createProject(createFormObj);
+  }
+
+  getMemberIds(){
+    const membersValue = this.createForm.get('members')?.value;
+    if (Array.isArray(membersValue)) {
+      this.memberIds = membersValue.map((member: any) => member.value);
+    }
+  }
+
+  createProject(formObj: any){
+    this.newService.createProject(formObj).subscribe({
+      next: () => this.addMembers(this.memberIds),
+      error: error => {
+        console.log(error);
+      }
+    })
+  }
+
+  addMembers(idsArray: number[]){
+    this.newService.addMembers(idsArray).subscribe({
       next: () => {
         localStorage.clear();
         this.router.navigateByUrl('/manage')
       },
       error: error => {
-        console.log(error);
+        console.log(error); 
       }
     })
   }
@@ -98,14 +120,16 @@ export class ProjectComponent implements OnInit{
     this.showAlert = false;
   }
 
-  getEmployees(){
-    this.newService.getEmployees().subscribe({
-      next: response => {
-        this.employees = response;
-      },
-      error: error => console.log(error)
-    })
-  }
+  requestAutocompleteItems = (text: string): Observable<any[]> => {
+    return this.newService.getEmployees().pipe(
+      map(employees => employees.map(employee => (
+        {
+          display: employee.visa + ': ' + employee.first_Name.toUpperCase() + ' ' + employee.last_Name.toUpperCase(),
+          value: employee.id
+        }
+      )))
+    );
+  };
 
   validateNumberNotExisted(): AsyncValidatorFn {
     return (control: AbstractControl) => {
@@ -120,6 +144,10 @@ export class ProjectComponent implements OnInit{
         })
       )
     }
+  }
+
+  onEnterKey(event: any): void {
+    event.preventDefault();
   }
 }
 

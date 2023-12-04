@@ -1,6 +1,7 @@
 <div class="d-flex align-items-center">
     <label>{{label}} <span> *</span></label>
     <input 
+        (keydown.enter)="onEnterKey($event)"
         type={{type}}
         [formControl]="control" 
         class="form-control" 

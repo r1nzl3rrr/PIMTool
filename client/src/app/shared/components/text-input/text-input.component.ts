@@ -24,4 +24,8 @@ export class TextInputComponent implements ControlValueAccessor {
   get control(): FormControl{
     return this.controlDir.control as FormControl
   }
+
+  onEnterKey(event: any): void {
+    event.preventDefault();
+  }
 }

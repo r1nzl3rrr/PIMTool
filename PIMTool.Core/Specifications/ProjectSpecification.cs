@@ -12,8 +12,7 @@ namespace PIMTool.Core.Specifications
                 (string.IsNullOrEmpty
                 (projectParams.Search) || x.Project_Number.ToString().Equals
                 (projectParams.Search) || x.Name.ToLower().Contains
-                (projectParams.Search) || x.Customer.ToLower().Contains
-                (projectParams.Search) || x.Group.Leader.Visa.ToLower().Equals(projectParams.Search)
+                (projectParams.Search) || x.Customer.ToLower().Contains(projectParams.Search)
                 )
             )
         {

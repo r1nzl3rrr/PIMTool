@@ -23,5 +23,9 @@ namespace PIMTool.Core.Interfaces.Services
         Task UpdateProjectAsync(Project project, CancellationToken cancellationToken = default);
 
         Task<Project?> FindByNumberAsync(int number);
+
+        Task AddMembersAsync(ProjectEmployee[] projectEmployee);
+
+        Task<int> GetMaxProjectIdAsync();
     }
 }

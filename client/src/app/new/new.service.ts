@@ -28,4 +28,8 @@ export class NewService {
     return this.http.post(this.baseUrl + 'projects', values);
   }
 
+  addMembers(memIds: number[]){
+    return this.http.post(this.baseUrl + 'projects/addmembers', memIds);
+  }
+
 }

@@ -5,6 +5,7 @@ import { NewRoutingModule } from './new-routing.module';
 import { CustomerComponent } from './customer/customer.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -19,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     NewRoutingModule,
     DatePipe,
     SharedModule,
+    FormsModule
   ],
   providers: [DatePipe]
 })
