@@ -26,6 +26,7 @@ npm install
 ng serve
 ```
 This will launch Angular development server and host the frontend application locally.
+
 4. Open your browser and go to [http://localhost:4200](http://localhost:4200)
 
 ### Server side
