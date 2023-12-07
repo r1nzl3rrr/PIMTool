@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
   }
   
-  isServerError(): boolean{
-    return this.router.url === '/server-error'
+  isError(): boolean{
+    return this.router.url === '/server-error' || this.router.url === '/not-found'
   }
 }

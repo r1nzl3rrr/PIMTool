@@ -35,7 +35,7 @@
 
             <div class="d-flex align-items-center">
                 <label>Members</label>
-                <tag-input class="form-control" formControlName="members"
+                <tag-input class="form-control" formControlName="members" placeholder=""
                             [onlyFromAutocomplete]="true">
                     <tag-input-dropdown [showDropdownIfEmpty]="true"
                     [autocompleteObservable]='requestAutocompleteItems'>
@@ -59,7 +59,7 @@
                 <input 
                 [class.is-invalid]="createForm.get('start_Date')?.touched && createForm.get('start_Date')?.invalid"
                 type="text" id="startDate" class="form-control" formControlName="start_Date" 
-                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" 
+                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass:'theme-blue' }" 
                 placement="top"
                 bsDatepicker>
 
@@ -67,7 +67,7 @@
                 <input 
                 [class.is-invalid]="createForm.get('end_Date')?.touched && createForm.get('end_Date')?.invalid"
                 type="text" id="endDate" class="form-control" formControlName="end_Date" 
-                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" 
+                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass:'theme-blue'}" 
                 placement="top"
                 bsDatepicker>
 
