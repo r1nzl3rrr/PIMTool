@@ -1,0 +1,39 @@
+.not-found{
+    margin-top: 6%;
+    min-height: 79vh;
+}
+
+img{
+    height: 300px;
+    width: 300px;
+}
+
+.general{
+    margin-left: 8%;
+}
+
+.error-text{
+    padding-left: 8%;
+    font-weight: 700;
+    font-size: 25pt;
+}
+
+p{
+    color: #666666;
+    &:first-child{
+        margin-bottom: 0px;
+        & span{
+            color: red;
+        }
+    }
+    &:nth-child(2){
+        margin-bottom: 30px;
+        & span{
+            color: red;
+        }
+    }
+    &:nth-child(3) span{
+        color: #2F85FA;
+        cursor: pointer;
+    }
+}
