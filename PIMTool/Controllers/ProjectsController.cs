@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.ObjectPool;
 using PIMTool.AddingAndUpdatingDtos;
 using PIMTool.Config;
 using PIMTool.Core.Domain.Entities;
@@ -69,6 +70,7 @@ namespace PIMTool.Controllers
             {
                 Project_Id = newProjectId,
                 Employee_Id = memId
+
             }).ToArray();
 
             await _projectService.AddMembersAsync(projectEmployees);
@@ -78,19 +80,17 @@ namespace PIMTool.Controllers
 
         [HttpPost("updatemembers/{id}")]
         public async Task<ActionResult> UpdateMembers(int id, int[] memIds){
+            await _projectService.RemoveMemberAsync(id);
+
             if(memIds == null || !memIds.Any()){
-               await _projectService.RemoveMemberAsync(id);
                return Ok(new ApiResponse(200));
             }
             
-            await _projectService.RemoveMemberAsync(id);
-
-            int newProjectId = await _projectService.GetMaxProjectIdAsync();
-            
             ProjectEmployee[] projectEmployees = memIds.Select(memId => new ProjectEmployee
             {
-                Project_Id = newProjectId,
+                Project_Id = id,
                 Employee_Id = memId
+                
             }).ToArray();
 
             await _projectService.AddMembersAsync(projectEmployees);
